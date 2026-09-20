@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.juanruiz.nox",
+      "sha256_cert_fingerprints": [
+        "FD:39:F7:37:91:A3:13:38:84:55:B8:59:9A:E4:08:57:67:5A:D6:B0:A0:BF:D4:A5:1A:BF:AB:73:0B:0C:E0:C4",
+        "16:EF:A3:D4:9F:41:9E:53:BE:0B:0F:E9:F8:87:EF:75:85:5B:28:0F:F5:9A:B3:2E:FD:EE:61:FB:C6:5B:76:A0",
+        "BA:96:9E:B0:4F:9B:1E:C5:90:44:58:77:71:34:E0:8F:2F:3D:A8:A3:F6:98:AC:9A:5D:BC:25:FB:6B:4F:50:E5"
+      ]
+    }
+  }
+]

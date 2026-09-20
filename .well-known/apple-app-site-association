@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["NW3H8PF3XV.com.juanruiz.nox"],
+        "components": [
+          { "/": "/p/*" },
+          { "/": "/e/*" },
+          { "/": "/v/*" },
+          { "/": "/u/*" },
+          { "/": "/g/*" }
+        ]
+      }
+    ]
+  }
+}

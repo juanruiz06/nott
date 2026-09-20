@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0b16">
+<title>Un perfil en NOTT</title>
+<meta name="description" content="Añádelo y ves sus planes.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOTT">
+<meta property="og:title" content="Un perfil en NOTT">
+<meta property="og:description" content="Añádelo y ves sus planes.">
+<meta property="og:image" content="https://nott.es/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nott.es/u/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Un perfil en NOTT">
+<meta name="twitter:description" content="Añádelo y ves sus planes.">
+<meta name="twitter:image" content="https://nott.es/og.png">
+<style>
+:root{--bg:#0e0b16;--surface:#171226;--text:#ece8f5;--muted:#a89fc4;--primary:#c9a24b;--border:#2a2340}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+.wrap{max-width:480px;margin:0 auto;padding:32px 20px 64px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+header.top .brand{font-weight:800;letter-spacing:.14em;color:var(--primary);font-size:20px}
+a{color:var(--primary)}
+h1{font-size:26px;margin:24px 0 8px;line-height:1.25}
+p{margin:0 0 14px}
+p.lead{color:var(--muted)}
+.actions{display:flex;flex-direction:column;gap:12px;margin:28px 0 8px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:14px 20px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;text-align:center}
+.btn-primary{background:var(--primary);color:#171226}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn:focus-visible{outline:3px solid var(--text);outline-offset:3px}
+.note{color:var(--muted);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.nav{margin-top:8px;font-size:14px}.nav a{margin-right:16px}
+footer{margin-top:48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:18px}
+footer a{margin-right:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><span class="brand">NOTT</span></header>
+<h1 id="title">Un perfil en NOTT</h1>
+<p class="lead" id="lead">Ábrelo en NOTT, añádelo como amigo y ves sus planes.</p>
+<div class="actions">
+<a class="btn btn-primary" id="open" hidden>Abrir en NOTT</a>
+<a class="btn btn-secondary" href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a>
+</div>
+<p class="note" id="invite" hidden>¿Aún no tienes NOTT? Descárgala y <strong>vuelve a tocar este enlace</strong>: así entras directo y tu amigo te encuentra dentro.</p>
+<p class="note" id="missing" hidden>Este enlace viene incompleto, así que no podemos abrirte el perfil. Bájate NOTT y búscalo por su nombre de usuario.</p>
+<noscript><p class="note">Activa JavaScript para abrir el enlace en la app, o descarga NOTT desde la App Store.</p></noscript>
+<script>
+// spec 068: el esquema sigue siendo nox:// a propósito. Las versiones 1.0.0/1.1.0 solo entienden
+// ese; la 1.2.0 (NOTT) entiende nox:// y nott://. Cambiarlo dejaría fuera a los que no han actualizado.
+(function(){
+  var ID=/^[A-Za-z0-9._-]{1,80}$/;
+  function param(name){
+    var q=window.location.search.replace(/^\?/,'');
+    var parts=q.split('&');
+    for(var k=0;k<parts.length;k++){
+      if(!parts[k]){continue;}
+      var eq=parts[k].indexOf('=');
+      var key=eq===-1?parts[k]:parts[k].slice(0,eq);
+      if(decodeURIComponent(key.replace(/\+/g,' '))!==name){continue;}
+      var raw=eq===-1?'':parts[k].slice(eq+1);
+      try{return decodeURIComponent(raw.replace(/\+/g,' '));}catch(e){return '';}
+    }
+    return '';
+  }
+  function ok(v,re){return v&&re.test(v)?v:'';}
+  // Si NOTT está instalada, iOS pregunta "¿Abrir en NOTT?" y la abre con el nox://. Aquí
+  // SOLO se intenta abrir la app: la App Store automática se quitó (QA 2026-09-14) porque
+  // con el aviso de iOS en pantalla la página sigue visible y el temporizador mandaba a la
+  // App Store aunque la app se abriera. El botón "Descargar en la App Store" ya lleva allí.
+  // Con los universal links (build 20) iOS abrirá la app antes de cargar esta página.
+  function autoOpen(target){
+    if(!/iPhone|iPad|iPod/i.test(navigator.userAgent)){return;}
+    setTimeout(function(){window.location.href=target;},60);
+  }
+
+  var btn=document.getElementById('open'), miss=document.getElementById('missing');
+  // Código de invitación (spec 061): base62 de 22. Va al `nox://` para que la app lo
+  // reclame y deje enviada la solicitud. Con universal links (1.1.0) iOS abre la app antes
+  // de cargar esta página y el código viaja en la propia URL; esto cubre a los de 1.0.0.
+  var CODE=/^[0-9A-Za-z]{22}$/;
+  var code=ok(param('c'),CODE);
+  var href=(function(){
+    var i=ok(param('i'),ID);
+    if(!i){return '';}
+    var u='nox://profile/'+encodeURIComponent(i);
+    return code?u+'?c='+encodeURIComponent(code):u;
+  })();
+  // Solo se enmarca como invitación si el enlace está completo: con `c` pero sin `i` no hay
+  // adónde ir, y decir "te han invitado" junto a "este enlace viene incompleto" es absurdo.
+  if(code&&href){
+    // Quien llega por una invitación no viene a "ver un perfil": viene a entrar.
+    document.getElementById('title').textContent='Te han invitado a NOTT';
+    document.getElementById('lead').textContent='Ábrela y ya estarás dentro con quien te invitó.';
+    document.title='Te han invitado a NOTT';
+    document.getElementById('invite').hidden=false;
+  }
+  if(href){btn.setAttribute('href',href);btn.hidden=false;autoOpen(href);}
+  else{miss.hidden=false;}
+})();
+</script>
+<footer>
+<a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a>
+<p>© NOTT · nott.es</p>
+</footer>
+</div>
+</body>
+</html>
