@@ -53,7 +53,7 @@
 </script>
 <script>document.documentElement.classList.add('js')</script>
 <style>
-/* Fuentes de marca (subconjunto latin de Google Fonts, OFL), las mismas que lista.nott.es. */
+/* Fuentes de marca (subconjunto latin de Google Fonts, OFL), servidas desde aquí. */
 @font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:600 700;font-display:swap;src:url('/assets/fonts/bricolage-latin.woff2') format('woff2')}
 @font-face{font-family:'Hanken Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url('/assets/fonts/hanken-latin.woff2') format('woff2')}
 @font-face{font-family:'Hanken Fallback';src:local('Helvetica Neue'),local('Arial');size-adjust:98%;ascent-override:92%;descent-override:24%}
@@ -236,20 +236,14 @@ section.block{padding:96px 0}
 .card p{margin-top:8px;color:var(--muted)}
 @media (min-width:820px){.cards3{grid-template-columns:repeat(3,1fr)}}
 
-/* Para locales (y, en pequeño, NOTT Lista para planes entre amigos) */
+/* Para locales */
 .venue{margin-top:48px;padding:36px;display:grid;gap:32px;background:linear-gradient(180deg,rgba(244,183,64,.08),rgba(244,183,64,0) 60%),var(--surface);border-color:rgba(244,183,64,.3)}
-.venue .tag,.lista .tag{align-self:flex-start;display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(244,183,64,.3)}
+.venue .tag{align-self:flex-start;display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(244,183,64,.3)}
 .venue h3{margin-top:18px;font-size:clamp(1.5rem,3vw,2rem);line-height:1.1}
 .venue p{margin-top:12px;color:var(--muted);max-width:32em}
 .venue .btn{margin-top:28px;white-space:normal;text-align:center}
 .venue .ticks{margin:0;gap:16px;align-content:center}
 .venue .ticks b{color:var(--fg);font-weight:600}
-.lista{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:20px 24px;border-radius:20px;border:1px solid var(--line);background:var(--bg-alt)}
-.lista .tag{background:var(--surface-2);color:var(--fg-2);border-color:var(--line)}
-.lista p{flex:1 1 320px;color:var(--muted);font-size:15px}
-.lista p b{color:var(--fg-2);font-weight:600}
-.lista a{color:var(--gold);font-weight:600;text-decoration:none;white-space:nowrap}
-.lista a:hover{text-decoration:underline}
 @media (min-width:900px){.venue{grid-template-columns:1.05fr .95fr;gap:56px;padding:48px}}
 
 /* Preguntas */
@@ -510,11 +504,6 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
           <li><span><b>La Sala</b> enseña el ambiente de dentro, en directo y solo desde el local.</span></li>
         </ul>
       </article>
-      <aside class="lista reveal" aria-label="NOTT Lista">
-        <span class="tag">NOTT Lista</span>
-        <p><b>¿Montas algo entre amigos?</b> Para el cumple, la fiesta del piso o la de la peña: una lista compartida de quién viene y quién ha puesto su parte. Gratis.</p>
-        <a href="https://lista.nott.es">lista.nott.es <span aria-hidden="true">→</span></a>
-      </aside>
     </div>
   </section>
 
@@ -589,7 +578,6 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
       <ul>
         <li><a href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a></li>
         <li><a href="/#locales">Para locales</a></li>
-        <li><a href="https://lista.nott.es">NOTT Lista, para planes entre amigos</a></li>
         <li><a href="/soporte/">Soporte</a></li>
       </ul>
     </div>
