@@ -236,17 +236,21 @@ section.block{padding:96px 0}
 .card p{margin-top:8px;color:var(--muted)}
 @media (min-width:820px){.cards3{grid-template-columns:repeat(3,1fr)}}
 
-/* Para locales y organizadores */
-.pro{display:grid;gap:16px;margin-top:48px}
-.pro .card{position:relative;overflow:hidden;padding:32px;display:flex;flex-direction:column}
-.pro .card.hl{background:linear-gradient(180deg,rgba(244,183,64,.08),rgba(244,183,64,0) 60%),var(--surface);border-color:rgba(244,183,64,.3)}
-.pro .tag{align-self:flex-start;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--fg-2);border:1px solid var(--line)}
-.pro .hl .tag{background:var(--gold-soft);color:var(--gold);border-color:rgba(244,183,64,.3)}
-.pro h3{margin-top:18px;font-size:clamp(1.5rem,3vw,1.9rem);line-height:1.1}
-.pro p{margin-top:10px;color:var(--muted)}
-.pro .ticks{margin-bottom:28px}
-.pro .card .btn{margin-top:auto;align-self:flex-start;white-space:normal;text-align:center}
-@media (min-width:900px){.pro{grid-template-columns:1fr 1fr}}
+/* Para locales (y, en pequeño, NOTT Lista para planes entre amigos) */
+.venue{margin-top:48px;padding:36px;display:grid;gap:32px;background:linear-gradient(180deg,rgba(244,183,64,.08),rgba(244,183,64,0) 60%),var(--surface);border-color:rgba(244,183,64,.3)}
+.venue .tag,.lista .tag{align-self:flex-start;display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(244,183,64,.3)}
+.venue h3{margin-top:18px;font-size:clamp(1.5rem,3vw,2rem);line-height:1.1}
+.venue p{margin-top:12px;color:var(--muted);max-width:32em}
+.venue .btn{margin-top:28px;white-space:normal;text-align:center}
+.venue .ticks{margin:0;gap:16px;align-content:center}
+.venue .ticks b{color:var(--fg);font-weight:600}
+.lista{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:20px 24px;border-radius:20px;border:1px solid var(--line);background:var(--bg-alt)}
+.lista .tag{background:var(--surface-2);color:var(--fg-2);border-color:var(--line)}
+.lista p{flex:1 1 320px;color:var(--muted);font-size:15px}
+.lista p b{color:var(--fg-2);font-weight:600}
+.lista a{color:var(--gold);font-weight:600;text-decoration:none;white-space:nowrap}
+.lista a:hover{text-decoration:underline}
+@media (min-width:900px){.venue{grid-template-columns:1.05fr .95fr;gap:56px;padding:48px}}
 
 /* Preguntas */
 .faq{max-width:760px;margin:48px auto 0;display:grid;gap:12px}
@@ -309,7 +313,7 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
     <div class="links">
       <a href="#app">La app</a>
       <a href="#privacidad">Tu privacidad</a>
-      <a href="#locales">Locales y fiestas</a>
+      <a href="#locales">Para locales</a>
       <a href="#preguntas">Preguntas</a>
     </div>
     <a class="btn btn-gold" href="https://apps.apple.com/es/app/id6797049428">Descargar</a>
@@ -405,7 +409,7 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
           <ul class="ticks">
             <li>En vivo, Ahora, Hasta tarde, Con amigos</li>
             <li>Distancia y hora de cierre de un vistazo</li>
-            <li>Entradas del local a un toque</li>
+            <li>Un toque y estás en la venta oficial del local</li>
           </ul>
         </div>
         <div class="visual reveal"><div class="phone"><img src="/assets/img/02-sitios-mapa.webp" alt="Pantalla Sitios de NOTT: mapa de Murcia con los locales agrupados y una lista con Alter Ego, Sala Revolver y Plaza 3." width="600" height="1298" loading="lazy"></div></div>
@@ -488,33 +492,29 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
   <section class="block" id="locales" style="padding-top:24px">
     <div class="wrap">
       <div class="head reveal">
-        <p class="kicker">¿Trabajas la noche?</p>
-        <h2 class="display">Si tienes un local o montas fiestas, NOTT también es para ti.</h2>
+        <p class="kicker">Para locales</p>
+        <h2 class="display">Te traemos a la gente. La venta sigue siendo tuya.</h2>
+        <p>NOTT es donde tu público decide adónde ir esta noche. Cuando se decide por ti, lo mandamos a tu venta oficial.</p>
       </div>
-      <div class="pro">
-        <article class="card reveal">
-          <span class="tag">Locales y salas</span>
-          <h3 class="display">Tu local, en el móvil de quien sale esta noche.</h3>
-          <p>NOTT enseña a cada usuario qué sitios tiene cerca y a cuáles van sus amigos. Que el tuyo esté bien contado marca la diferencia.</p>
-          <ul class="ticks">
-            <li>Ficha con dirección, horario y cómo llegar</li>
-            <li>Botón de entradas con tu ticketera de siempre</li>
-            <li>La Sala enseña el ambiente de dentro, en directo</li>
-          </ul>
-          <a class="btn btn-ghost" href="mailto:soporte@nott.es?subject=Tengo%20un%20local">Hablemos: soporte@nott.es</a>
-        </article>
-        <article class="card hl reveal">
-          <span class="tag">NOTT Lista · para organizadores</span>
-          <h3 class="display">La lista de tu fiesta, sin Excel.</h3>
-          <p>Apunta a tu gente con un enlace, cobra por Bizum como siempre y controla la puerta con el móvil de cualquiera.</p>
-          <ul class="ticks">
-            <li>Quién viene, quién ha pagado y quién ha entrado</li>
-            <li>Tus invitados no necesitan instalar nada</li>
-            <li>Gratis y sin comisiones</li>
-          </ul>
-          <a class="btn btn-gold" href="https://lista.nott.es">Monta tu fiesta en lista.nott.es</a>
-        </article>
-      </div>
+      <article class="card venue reveal">
+        <div>
+          <span class="tag">Locales, salas y promotoras</span>
+          <h3 class="display">Tu local, en el móvil de quien está decidiendo dónde ir.</h3>
+          <p>Quien abre NOTT ve qué sitios tiene cerca, a cuáles van sus amigos y qué se vive dentro. Que tu local esté bien contado ahí se nota en la cola.</p>
+          <a class="btn btn-gold" href="mailto:soporte@nott.es?subject=Tengo%20un%20local">Hablemos: soporte@nott.es</a>
+        </div>
+        <ul class="ticks">
+          <li><span><b>En el mapa y en Descubrir</b>, con dirección, horario y cómo llegar.</span></li>
+          <li><span><b>La entrada se compra en tu ticketera oficial.</b> Nosotros ponemos al comprador; la venta, el cobro y el acceso siguen siendo tuyos.</span></li>
+          <li><span><b>El plan se contagia.</b> Cuando alguien dice «Voy a ir», sus amigos lo ven, y así llega más gente.</span></li>
+          <li><span><b>La Sala</b> enseña el ambiente de dentro, en directo y solo desde el local.</span></li>
+        </ul>
+      </article>
+      <aside class="lista reveal" aria-label="NOTT Lista">
+        <span class="tag">NOTT Lista</span>
+        <p><b>¿Montas algo entre amigos?</b> Para el cumple, la fiesta del piso o la de la peña: una lista compartida de quién viene y quién ha puesto su parte. Gratis.</p>
+        <a href="https://lista.nott.es">lista.nott.es <span aria-hidden="true">→</span></a>
+      </aside>
     </div>
   </section>
 
@@ -544,6 +544,10 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
         <details class="reveal">
           <summary>¿Quién puede ver lo que publico?</summary>
           <p>Lo decides tú en <em>Ajustes → ¿Quién puede verte?</em>: solo tus amigos, amigos y amigos de amigos, o todos.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿Vendéis entradas?</summary>
+          <p>No. Cuando un local vende entradas, el botón te lleva a su venta oficial y la compra se hace allí, con sus condiciones.</p>
         </details>
         <details class="reveal">
           <summary>Antes tenía NOX. ¿Es lo mismo?</summary>
@@ -584,7 +588,8 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
       <h4>NOTT</h4>
       <ul>
         <li><a href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a></li>
-        <li><a href="https://lista.nott.es">NOTT Lista para organizadores</a></li>
+        <li><a href="/#locales">Para locales</a></li>
+        <li><a href="https://lista.nott.es">NOTT Lista, para planes entre amigos</a></li>
         <li><a href="/soporte/">Soporte</a></li>
       </ul>
     </div>
