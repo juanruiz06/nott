@@ -1,35 +1,618 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NOTT · nott.es</title><style>
-:root{--bg:#0e0b16;--surface:#171226;--text:#ece8f5;--muted:#a89fc4;--primary:#c9a24b;--border:#2a2340}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
-.wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
-header.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-header.top .brand{font-weight:800;letter-spacing:.14em;color:var(--primary);font-size:20px}
-a{color:var(--primary)}
-h1{font-size:26px;margin:18px 0 6px}
-h2{font-size:19px;margin:34px 0 8px;border-top:1px solid var(--border);padding-top:22px}
-h3{font-size:16px;color:var(--muted)}
-blockquote{color:var(--muted);border-left:3px solid var(--primary);margin:16px 0;padding:4px 16px;background:var(--surface);border-radius:0 8px 8px 0}
-code{background:var(--surface);padding:2px 6px;border-radius:6px;font-size:.9em}
-hr{border:0;border-top:1px solid var(--border);margin:28px 0}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;display:block;overflow-x:auto}
-th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
-th{background:var(--surface)}
-.nav{margin-top:8px;font-size:14px}.nav a{margin-right:16px}
-footer{margin-top:48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:18px}
-</style></head>
-<body><div class="wrap">
-<header class="top"><span class="brand">NOTT</span></header>
-<div class="nav"><a href="/privacidad/">Política de privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a></div>
-<h1>NOTT</h1><p>La app de vida nocturna. Antes se llamaba <strong>NOX</strong>: misma app, mismos amigos, mismos planes.</p>
-<p><a href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a></p>
-<p>Documentos legales:</p><ul>
-<li><a href="/privacidad/">Política de privacidad</a></li>
-<li><a href="/terminos/">Términos y condiciones</a></li>
-<li><a href="/soporte/">Soporte</a></li></ul>
-<p style="color:var(--muted)">Soporte: <a href="mailto:soporte@nott.es">soporte@nott.es</a> · Privacidad: <a href="mailto:privacidad@nott.es">privacidad@nott.es</a></p>
-<footer>© NOTT · nott.es — Juan Ruiz Fernández</footer>
-</div></body></html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOTT · Tu noche, con tu gente</title>
+<meta name="description" content="La app para salir de noche con tus amigos: mira a qué sitio van esta noche, descubre bares y discotecas en el mapa y vive el momento desde dentro. Gratis en la App Store.">
+<meta name="theme-color" content="#0c0a10">
+<meta name="color-scheme" content="dark">
+<meta name="apple-itunes-app" content="app-id=6797049428">
+<link rel="canonical" href="https://nott.es/">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOTT">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://nott.es/">
+<meta property="og:title" content="NOTT · Tu noche, con tu gente">
+<meta property="og:description" content="Mira a qué sitio van tus amigos esta noche, descubre locales en el mapa y vive el momento desde dentro.">
+<meta property="og:image" content="https://nott.es/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NOTT · Tu noche, con tu gente">
+<meta name="twitter:description" content="Mira a qué sitio van tus amigos esta noche, descubre locales en el mapa y vive el momento desde dentro.">
+<meta name="twitter:image" content="https://nott.es/og.png">
+<link rel="preload" href="/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "NOTT",
+      "url": "https://nott.es/",
+      "logo": "https://nott.es/apple-touch-icon.png",
+      "email": "soporte@nott.es",
+      "founder": { "@type": "Person", "name": "Juan Ruiz Fernández" },
+      "areaServed": "ES"
+    },
+    {
+      "@type": "MobileApplication",
+      "name": "NOTT — Tu noche",
+      "operatingSystem": "iOS",
+      "applicationCategory": "SocialNetworkingApplication",
+      "inLanguage": "es",
+      "url": "https://apps.apple.com/es/app/id6797049428",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+    }
+  ]
+}
+</script>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Fuentes de marca (subconjunto latin de Google Fonts, OFL), servidas desde aquí. */
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:600 700;font-display:swap;src:url('/assets/fonts/bricolage-latin.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url('/assets/fonts/hanken-latin.woff2') format('woff2')}
+@font-face{font-family:'Hanken Fallback';src:local('Helvetica Neue'),local('Arial');size-adjust:98%;ascent-override:92%;descent-override:24%}
+
+/* Paleta de NOTT («Después de medianoche»): mismos hex que src/theme/tokens.ts de la app.
+   Plum-ink cálido (nunca negro puro), hueso (nunca blanco puro), oro = marca y acción,
+   ember SOLO «está pasando». */
+:root{
+  --bg:#0c0a10;--bg-alt:#100d16;--surface:#17131f;--surface-2:#211b2c;
+  --line-subtle:#1f1a28;--line:#2b2436;--line-strong:#3b3348;
+  --fg:#f3eee6;--fg-2:#c9c2d0;--muted:#a9a1b4;--faint:#6c6478;
+  --gold:#f4b740;--gold-pressed:#e0a62f;--gold-soft:#241c10;--on-gold:#1a1206;
+  --ember:#ff4d6d;--ember-soft:#2a1119;--success:#58c9a0;
+  --sans:'Hanken Grotesk','Hanken Fallback',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --display:'Bricolage Grotesque','Hanken Grotesk',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.2,.65,.3,.9);
+  --wrap:1152px;--gutter:24px;
+  color-scheme:dark
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.display{font-family:var(--display);font-weight:700;letter-spacing:-.02em}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.9em;font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Botones: un solo oro; el secundario es superficie + hairline. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;transition:background .2s,border-color .2s,transform .15s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:var(--gold);color:var(--on-gold)}
+.btn-gold:hover{background:var(--gold-pressed)}
+.btn-ghost{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--line-strong)}
+.btn-store{padding:10px 24px 10px 20px;min-height:56px}
+.btn-store svg{width:22px;height:22px;flex:none}
+.btn-store span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
+.btn-store small{font-size:11px;font-weight:500;opacity:.8}
+.btn-store b{font-size:18px;font-weight:700;letter-spacing:-.01em}
+
+/* Cabecera */
+.top{position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(31,26,40,.6);background:rgba(12,10,16,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.top nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:30px;height:30px;border-radius:8px}
+.brand span{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.14em}
+.top .links{display:none;gap:28px;font-size:14px}
+.top .links a{color:var(--muted);text-decoration:none;transition:color .2s}
+.top .links a:hover{color:var(--fg)}
+.top .btn{min-height:38px;padding:8px 16px;font-size:14px}
+@media (min-width:860px){.top .links{display:flex}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden}
+.glow{pointer-events:none;position:absolute;top:-160px;left:50%;width:1100px;height:720px;transform:translateX(-50%);border-radius:50%;opacity:.7;filter:blur(64px);background:radial-gradient(closest-side,rgba(244,183,64,.22),rgba(244,183,64,.06) 55%,transparent 75%)}
+.paths{pointer-events:none;position:absolute;inset:0;opacity:.55}
+.paths svg{width:100%;height:100%}
+.paths path{fill:none;stroke:url(#nott-wave);stroke-linecap:round}
+.js .paths .w1{animation:drift1 9s ease-in-out infinite alternate}
+.js .paths .w2{animation:drift2 7s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translateY(-15px)}}
+@keyframes drift2{to{transform:translateY(-9px)}}
+.hero-grid{position:relative;display:grid;gap:56px;align-items:center;padding-block:56px 72px}
+.hero-copy{max-width:580px}
+.shimmer{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--fg),var(--gold));background-size:200% 100%;background-position:0% center;-webkit-background-clip:text;background-clip:text;color:transparent}
+.js .shimmer{animation:shimmer 2.2s linear .4s both}
+@keyframes shimmer{from{background-position:200% center}to{background-position:-200% center}}
+.hero h1{margin-top:20px;font-size:clamp(2.75rem,9vw,4.6rem);line-height:.96;overflow-wrap:anywhere}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{margin-top:22px;font-size:clamp(1.08rem,2.2vw,1.3rem);color:var(--muted);max-width:34em}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .fine{margin-top:18px;font-size:14px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px 14px}
+.hero .fine span{display:inline-flex;align-items:center;gap:6px}
+.hero .fine span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.7}
+@media (max-width:520px){.hero .ctas .btn{flex:1 1 100%}}
+
+/* El escaparate: dos móviles con capturas reales de la app */
+.stage{position:relative;height:540px;display:flex;justify-content:center}
+.phone{position:absolute;width:250px;aspect-ratio:1284/2778;border-radius:40px;padding:7px;background:linear-gradient(160deg,#2a2335,#141019);border:1px solid var(--line-strong);box-shadow:0 40px 90px -30px rgba(244,183,64,.28),0 20px 50px -20px rgba(0,0,0,.8)}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:33px;background:var(--bg-alt)}
+.stage .p-back{transform:translateX(-78px) rotate(-7deg);top:34px;opacity:.9}
+.stage .p-front{transform:translateX(82px) rotate(4deg);top:0}
+.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(23,19,31,.92);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.9);font-size:14px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);white-space:nowrap}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px var(--ember-soft)}
+.js .chip .dot{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,77,109,.12)}}
+.chip.live{top:92px;left:calc(50% - 250px);color:var(--ember);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.chip.friends{bottom:52px;left:calc(50% + 12px)}
+.faces{display:flex}
+.faces i{display:grid;place-items:center;width:28px;height:28px;margin-left:-8px;border-radius:50%;border:2px solid var(--surface);background:var(--gold);color:var(--on-gold);font:700 12px/1 var(--display);font-style:normal}
+.faces i:first-child{margin-left:0}
+.faces i:nth-child(2){background:#e7a8b8}
+.faces i:nth-child(3){background:#9fd8c2}
+.faces i:nth-child(4){background:#c9b6f2}
+@media (min-width:1000px){
+  .hero-grid{grid-template-columns:1.02fr .98fr;padding-block:88px 112px}
+  .stage{height:600px}
+  .phone{width:272px}
+  .stage .p-back{transform:translateX(-96px) rotate(-7deg)}
+  .stage .p-front{transform:translateX(96px) rotate(4deg)}
+  .chip.live{left:calc(50% - 270px)}
+}
+@media (max-width:520px){
+  .stage{height:450px}
+  .phone{width:200px;border-radius:32px;padding:6px}
+  .phone img{border-radius:26px}
+  .stage .p-back{transform:translateX(-58px) rotate(-7deg);top:26px}
+  .stage .p-front{transform:translateX(60px) rotate(4deg)}
+  .chip.live{left:0;top:64px}
+  .chip.friends{left:auto;right:0;bottom:30px}
+}
+
+/* Franja de ciudad */
+.band{border-block:1px solid var(--line-subtle);background:var(--bg-alt)}
+.band .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 28px;padding-block:18px;font-size:14px;color:var(--muted);text-align:center}
+.band b{color:var(--fg);font-weight:600}
+
+/* Secciones */
+section.block{padding:96px 0}
+.head{max-width:680px}
+.head h2{margin-top:12px;font-size:clamp(2rem,5vw,2.9rem);line-height:1.04}
+.head p:not(.kicker){margin-top:14px;font-size:1.13rem;color:var(--muted)}
+.head.center{margin-inline:auto;text-align:center}
+
+/* Funciones: texto + móvil, alternando */
+.feature{display:grid;gap:40px;align-items:center;margin-top:72px}
+.visual{position:relative;display:grid;place-items:center;padding:48px 20px;border-radius:32px;border:1px solid var(--line-subtle);background:radial-gradient(ellipse at 50% 0%,rgba(244,183,64,.16),transparent 62%),linear-gradient(180deg,var(--surface),var(--bg-alt));overflow:hidden}
+.visual::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(243,238,230,.07) 1px,transparent 1px);background-size:22px 22px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 70%)}
+.feature .phone{position:relative;width:240px;margin:0 auto}
+.visual .tag{position:absolute;z-index:2;top:18px;left:18px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(12,10,16,.7);border:1px solid var(--line);color:var(--fg-2)}
+.feature h3{margin-top:10px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.08}
+.feature p.body{margin-top:14px;font-size:1.08rem;color:var(--muted);max-width:30em}
+.ticks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+.ticks li{display:flex;gap:12px;align-items:flex-start;color:var(--fg-2)}
+.ticks li::before{content:'';flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--gold-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4b740' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat;border:1px solid rgba(244,183,64,.35)}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid rgba(244,183,64,.4);color:var(--gold);font:600 13px/1 var(--mono)}
+.feature .label{display:flex;align-items:center;gap:12px}
+@media (min-width:900px){
+  .feature{grid-template-columns:1fr 1fr;gap:72px}
+  .feature .phone{width:270px}
+  .feature.flip .copy{order:2}
+  .visual{padding:64px 20px}
+}
+
+/* La Sala: maqueta en HTML (no hay captura pública con fotos) */
+.sala{position:relative;width:240px;margin:0 auto;aspect-ratio:1284/2778;border-radius:40px;padding:7px;background:linear-gradient(160deg,#2a2335,#141019);border:1px solid var(--line-strong);box-shadow:0 40px 90px -30px rgba(244,183,64,.28),0 20px 50px -20px rgba(0,0,0,.8)}
+.sala .screen{position:relative;height:100%;border-radius:33px;overflow:hidden;background:#0b0910;padding:44px 14px 14px}
+.sala .island{position:absolute;top:10px;left:50%;width:78px;height:22px;transform:translateX(-50%);border-radius:14px;background:#000}
+.sala h4{margin:0;font:700 22px/1 var(--display);letter-spacing:-.02em}
+.sala .sub{margin-top:5px;font:500 10px/1.4 var(--mono);color:var(--muted)}
+.sala .here{margin-top:12px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--gold);color:var(--on-gold)}
+.sala .here svg{width:18px;height:18px;flex:none}
+.sala .here b{display:block;font-size:12px;line-height:1.2}
+.sala .here small{display:block;font-size:10px;opacity:.8}
+.sala .grid{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sala .shot{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden}
+.sala .shot::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55))}
+.sala .shot span{position:absolute;z-index:1;left:7px;bottom:6px;font-size:9px;font-weight:600;color:#fff}
+.s1{background:radial-gradient(circle at 30% 30%,#ff4d6d 0,transparent 45%),radial-gradient(circle at 75% 70%,#f4b740 0,transparent 50%),#2a1119}
+.s2{background:radial-gradient(circle at 60% 25%,#8a6cff 0,transparent 45%),radial-gradient(circle at 20% 80%,#ff4d6d 0,transparent 40%),#150f24}
+.s3{background:radial-gradient(circle at 50% 40%,#f4b740 0,transparent 40%),radial-gradient(circle at 80% 90%,#58c9a0 0,transparent 45%),#101a17}
+.s4{background:radial-gradient(circle at 25% 70%,#4dc3ff 0,transparent 45%),radial-gradient(circle at 80% 20%,#ff4d6d 0,transparent 40%),#0f1622}
+.sala .timer{position:absolute;left:14px;right:14px;bottom:14px;display:flex;justify-content:space-between;padding:9px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font:500 10px/1 var(--mono);color:var(--muted)}
+.sala .timer b{color:var(--fg)}
+@media (min-width:900px){.sala{width:270px}}
+
+/* Privacidad */
+.cards3{display:grid;gap:16px;margin-top:48px}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:24px;padding:28px}
+.card .ico{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--gold-soft);border:1px solid rgba(244,183,64,.25)}
+.card .ico svg{width:22px;height:22px;stroke:var(--gold)}
+.card h3{margin-top:18px;font-size:1.3rem;line-height:1.15}
+.card p{margin-top:8px;color:var(--muted)}
+@media (min-width:820px){.cards3{grid-template-columns:repeat(3,1fr)}}
+
+/* Para locales */
+.venue{margin-top:48px;padding:36px;display:grid;gap:32px;background:linear-gradient(180deg,rgba(244,183,64,.08),rgba(244,183,64,0) 60%),var(--surface);border-color:rgba(244,183,64,.3)}
+.venue .tag{align-self:flex-start;display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(244,183,64,.3)}
+.venue h3{margin-top:18px;font-size:clamp(1.5rem,3vw,2rem);line-height:1.1}
+.venue p{margin-top:12px;color:var(--muted);max-width:32em}
+.venue .btn{margin-top:28px;white-space:normal;text-align:center}
+.venue .ticks{margin:0;gap:16px;align-content:center}
+.venue .ticks b{color:var(--fg);font-weight:600}
+@media (min-width:900px){.venue{grid-template-columns:1.05fr .95fr;gap:56px;padding:48px}}
+
+/* Preguntas */
+.faq{max-width:760px;margin:48px auto 0;display:grid;gap:12px}
+.faq details{border:1px solid var(--line);background:var(--surface);border-radius:18px;transition:border-color .2s}
+.faq details[open]{border-color:var(--line-strong)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;font-weight:600;font-size:1.05rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'';flex:none;width:12px;height:12px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
+.faq details p{padding:0 22px 20px;color:var(--muted)}
+
+/* CTA final */
+.final{position:relative;overflow:hidden;border-radius:32px;border:1px solid rgba(244,183,64,.25);background:radial-gradient(ellipse at 50% -20%,rgba(244,183,64,.22),transparent 60%),var(--surface);padding:56px 28px;display:grid;gap:40px;align-items:center}
+.final img.mark{width:72px;height:72px;border-radius:18px;box-shadow:0 20px 50px -15px rgba(244,183,64,.45)}
+.final h2{margin-top:22px;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1}
+.final p{margin-top:14px;font-size:1.13rem;color:var(--muted);max-width:28em}
+.final .ctas{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+.qr{display:none;justify-self:end;text-align:center}
+.qr .code{width:188px;padding:16px;border-radius:24px;background:var(--fg)}
+.qr p{margin-top:12px;font-size:14px;color:var(--muted)}
+@media (min-width:900px){.final{grid-template-columns:1fr auto;padding:64px}.qr{display:block}}
+
+/* Pie */
+footer{margin-top:96px;border-top:1px solid var(--line-subtle);background:var(--bg-alt)}
+footer .cols{display:grid;gap:32px;padding-block:48px 32px}
+footer h4{margin:0 0 12px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+footer ul a{color:var(--muted);text-decoration:none;font-size:15px}
+footer ul a:hover{color:var(--fg)}
+footer .about p{margin-top:12px;color:var(--muted);font-size:15px;max-width:22em}
+footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;padding-inline:0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-block:20px 36px;border-top:1px solid var(--line-subtle);font-size:13px;color:var(--faint)}
+@media (max-width:1199px){footer .legal{margin-inline:var(--gutter)}}
+@media (min-width:760px){footer .cols{grid-template-columns:1.6fr 1fr 1fr 1fr}}
+
+/* Aparición al hacer scroll (sin JS, todo visible) */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+.js .rise{animation:rise .9s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.js .stage .p-back{animation:inBack 1.1s var(--ease) .25s both}
+.js .stage .p-front{animation:inFront 1.1s var(--ease) .1s both}
+@keyframes inBack{from{opacity:0;translate:0 30px}}
+@keyframes inFront{from{opacity:0;translate:0 24px}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="wrap" aria-label="Principal">
+    <a class="brand" href="/" aria-label="NOTT, inicio">
+      <img src="/assets/img/icon.webp" alt="" width="30" height="30">
+      <span>NOTT</span>
+    </a>
+    <div class="links">
+      <a href="#app">La app</a>
+      <a href="#privacidad">Tu privacidad</a>
+      <a href="#locales">Para locales</a>
+      <a href="#preguntas">Preguntas</a>
+    </div>
+    <a class="btn btn-gold" href="https://apps.apple.com/es/app/id6797049428">Descargar</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="paths" aria-hidden="true">
+      <svg viewBox="-2400 -800 4800 1600" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="nott-wave" x1="0%" x2="100%" y1="0%" y2="0%">
+            <stop offset="0%" stop-color="#f4b740" stop-opacity="0"/>
+            <stop offset="45%" stop-color="#f4b740" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9c2d0" stop-opacity=".15"/>
+          </linearGradient>
+        </defs>
+<path class="w1" d="M2400 845C2035 845 1853 606 1488 606C1162 606 998 306 672 306C384 306 240 5 -48 5C-298 5 -422 -248 -672 -248C-883 -248 -989 -446 -1200 -446C-1373 -446 -1459 -593 -1632 -593C-1766 -593 -1834 -680 -1968 -680C-2064 -680 -2112 -711 -2208 -711C-2266 -711 -2294 -727 -2352 -727C-2371 -727 -2381 -768 -2400 -768" stroke-width="3.0" opacity="0.12"/>
+<path class="w1" d="M2400 871C2035 871 1853 616 1488 616C1162 616 998 305 672 305C384 305 240 3 -48 3C-298 3 -422 -243 -672 -243C-883 -243 -989 -431 -1200 -431C-1373 -431 -1459 -568 -1632 -568C-1766 -568 -1834 -647 -1968 -647C-2064 -647 -2112 -678 -2208 -678C-2266 -678 -2294 -703 -2352 -703C-2371 -703 -2381 -755 -2400 -755" stroke-width="3.3" opacity="0.14"/>
+<path class="w1" d="M2400 894C2035 894 1853 623 1488 623C1162 623 998 300 672 300C384 300 240 1 -48 1C-298 1 -422 -235 -672 -235C-883 -235 -989 -414 -1200 -414C-1373 -414 -1459 -542 -1632 -542C-1766 -542 -1834 -614 -1968 -614C-2064 -614 -2112 -646 -2208 -646C-2266 -646 -2294 -680 -2352 -680C-2371 -680 -2381 -741 -2400 -741" stroke-width="3.6" opacity="0.16"/>
+<path class="w1" d="M2400 913C2035 913 1853 624 1488 624C1162 624 998 294 672 294C384 294 240 0 -48 0C-298 0 -422 -226 -672 -226C-883 -226 -989 -395 -1200 -395C-1373 -395 -1459 -514 -1632 -514C-1766 -514 -1834 -581 -1968 -581C-2064 -581 -2112 -616 -2208 -616C-2266 -616 -2294 -661 -2352 -661C-2371 -661 -2381 -729 -2400 -729" stroke-width="3.9" opacity="0.18"/>
+<path class="w1" d="M2400 928C2035 928 1853 621 1488 621C1162 621 998 285 672 285C384 285 240 -1 -48 -1C-298 -1 -422 -215 -672 -215C-883 -215 -989 -374 -1200 -374C-1373 -374 -1459 -485 -1632 -485C-1766 -485 -1834 -548 -1968 -548C-2064 -548 -2112 -588 -2208 -588C-2266 -588 -2294 -643 -2352 -643C-2371 -643 -2381 -716 -2400 -716" stroke-width="4.2" opacity="0.20"/>
+<path class="w1" d="M2400 938C2035 938 1853 613 1488 613C1162 613 998 276 672 276C384 276 240 0 -48 0C-298 0 -422 -202 -672 -202C-883 -202 -989 -351 -1200 -351C-1373 -351 -1459 -454 -1632 -454C-1766 -454 -1834 -516 -1968 -516C-2064 -516 -2112 -562 -2208 -562C-2266 -562 -2294 -626 -2352 -626C-2371 -626 -2381 -702 -2400 -702" stroke-width="4.5" opacity="0.22"/>
+<path class="w1" d="M2400 942C2035 942 1853 602 1488 602C1162 602 998 266 672 266C384 266 240 3 -48 3C-298 3 -422 -187 -672 -187C-883 -187 -989 -326 -1200 -326C-1373 -326 -1459 -423 -1632 -423C-1766 -423 -1834 -485 -1968 -485C-2064 -485 -2112 -538 -2208 -538C-2266 -538 -2294 -611 -2352 -611C-2371 -611 -2381 -688 -2400 -688" stroke-width="4.8" opacity="0.24"/>
+<path class="w2" d="M2400 868C1950 868 1725 502 1275 502C885 502 690 136 300 136C-30 136 -195 -157 -525 -157C-795 -157 -930 -375 -1200 -375C-1410 -375 -1515 -525 -1725 -525C-1875 -525 -1950 -612 -2100 -612C-2190 -612 -2235 -669 -2325 -669C-2355 -669 -2370 -727 -2400 -727" stroke-width="2.00" opacity="0.080"/>
+<path class="w2" d="M2400 877C1950 877 1725 501 1275 501C885 501 690 138 300 138C-30 138 -195 -146 -525 -146C-795 -146 -930 -354 -1200 -354C-1410 -354 -1515 -498 -1725 -498C-1875 -498 -1950 -584 -2100 -584C-2190 -584 -2235 -646 -2325 -646C-2355 -646 -2370 -709 -2400 -709" stroke-width="2.25" opacity="0.095"/>
+<path class="w2" d="M2400 883C1950 883 1725 498 1275 498C885 498 690 139 300 139C-30 139 -195 -134 -525 -134C-795 -134 -930 -333 -1200 -333C-1410 -333 -1515 -471 -1725 -471C-1875 -471 -1950 -556 -2100 -556C-2190 -556 -2235 -625 -2325 -625C-2355 -625 -2370 -691 -2400 -691" stroke-width="2.50" opacity="0.110"/>
+<path class="w2" d="M2400 885C1950 885 1725 493 1275 493C885 493 690 141 300 141C-30 141 -195 -120 -525 -120C-795 -120 -930 -311 -1200 -311C-1410 -311 -1515 -443 -1725 -443C-1875 -443 -1950 -530 -2100 -530C-2190 -530 -2235 -605 -2325 -605C-2355 -605 -2370 -673 -2400 -673" stroke-width="2.75" opacity="0.125"/>
+<path class="w2" d="M2400 884C1950 884 1725 486 1275 486C885 486 690 144 300 144C-30 144 -195 -105 -525 -105C-795 -105 -930 -287 -1200 -287C-1410 -287 -1515 -416 -1725 -416C-1875 -416 -1950 -504 -2100 -504C-2190 -504 -2235 -586 -2325 -586C-2355 -586 -2370 -653 -2400 -653" stroke-width="3.00" opacity="0.140"/>
+<path class="w2" d="M2400 880C1950 880 1725 479 1275 479C885 479 690 148 300 148C-30 148 -195 -89 -525 -89C-795 -89 -930 -263 -1200 -263C-1410 -263 -1515 -389 -1725 -389C-1875 -389 -1950 -480 -2100 -480C-2190 -480 -2235 -568 -2325 -568C-2355 -568 -2370 -632 -2400 -632" stroke-width="3.25" opacity="0.155"/>
+      </svg>
+    </div>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="kicker rise"><span class="shimmer">La app de la noche · Murcia</span></p>
+        <h1 class="display rise" style="animation-delay:.08s">Tu noche,<br><em>con tu gente.</em></h1>
+        <p class="lead rise" style="animation-delay:.16s">Mira a qué sitio van tus amigos esta noche, descubre bares y discotecas en el mapa y vive el momento desde dentro. Sin preguntar en veinte grupos.</p>
+        <div class="ctas rise" style="animation-delay:.24s">
+          <a class="btn btn-gold btn-store" href="https://apps.apple.com/es/app/id6797049428">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.93 1.16 9.2.77 1.1 1.68 2.35 2.88 2.3 1.16-.05 1.6-.75 3-.75 1.39 0 1.79.75 3.01.72 1.25-.02 2.03-1.12 2.79-2.23.88-1.28 1.24-2.53 1.26-2.59-.03-.01-2.42-.93-2.46-3.69zM14.1 5.86c.64-.78 1.07-1.85.95-2.93-.92.04-2.04.61-2.7 1.39-.59.69-1.11 1.79-.97 2.84 1.03.08 2.08-.52 2.72-1.3z"/></svg>
+            <span><small>Descárgala gratis en la</small><b>App Store</b></span>
+          </a>
+          <a class="btn btn-ghost" href="#app" style="min-height:56px">Ver cómo funciona</a>
+        </div>
+        <p class="fine rise" style="animation-delay:.32s"><span>Gratis y sin anuncios</span><span>iPhone</span><span>Android, muy pronto</span><span>+18</span></p>
+      </div>
+
+      <div class="stage" role="img" aria-label="Dos pantallas de NOTT: el mapa de locales de Murcia y la pestaña Ahora con un local recomendado para esta noche.">
+        <div class="phone p-back"><img src="/assets/img/02-sitios-mapa.webp" alt="" width="600" height="1298" fetchpriority="high"></div>
+        <div class="phone p-front"><img src="/assets/img/01-ahora-descubrir.webp" alt="" width="600" height="1298" fetchpriority="high"></div>
+        <div class="chip live" aria-hidden="true"><span class="dot"></span>Sale esta noche</div>
+        <div class="chip friends" aria-hidden="true"><span class="faces"><i>M</i><i>P</i><i>A</i><i>L</i></span>12 amigos van</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <span><b>Antes NOX.</b> Misma app, mismos amigos, mismos planes.</span>
+      <span>Nacida en <b>Murcia</b>, para toda la noche española.</span>
+    </div>
+  </div>
+
+  <section class="block" id="app">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="kicker">La app</p>
+        <h2 class="display">Todo lo que pasa esta noche, en un vistazo.</h2>
+        <p>Cuatro pestañas y una idea: que salir sea tan fácil como mirar el móvil.</p>
+      </div>
+
+      <div class="feature">
+        <div class="copy reveal">
+          <div class="label"><span class="num">01</span><span class="kicker">Ahora</span></div>
+          <h3 class="display">Quién sale y adónde.</h3>
+          <p class="body">Tus amigos comparten su plan de esta noche y tú lo ves de un vistazo. Le das a «Voy» y listo: ya sabéis dónde os veis.</p>
+          <ul class="ticks">
+            <li>Los planes de esta noche y de los próximos días</li>
+            <li>Comenta y reacciona sin abrir otro chat</li>
+            <li>Descubrir te sugiere sitios cuando no hay plan</li>
+          </ul>
+        </div>
+        <div class="visual reveal"><div class="phone"><img src="/assets/img/01-ahora-descubrir.webp" alt="Pantalla Ahora de NOTT: el bar Alter Ego recomendado para esta noche, con los botones «Voy a ir» y «Entradas»." width="600" height="1298" loading="lazy"></div></div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy reveal">
+          <div class="label"><span class="num">02</span><span class="kicker">Sitios</span></div>
+          <h3 class="display">El mapa de la noche.</h3>
+          <p class="body">Bares y discotecas cerca de ti, con hora de cierre, distancia y los amigos que van a cada uno. Filtra por lo que está abierto ahora o por lo que cierra tarde.</p>
+          <ul class="ticks">
+            <li>En vivo, Ahora, Hasta tarde, Con amigos</li>
+            <li>Distancia y hora de cierre de un vistazo</li>
+            <li>Un toque y estás en la venta oficial del local</li>
+          </ul>
+        </div>
+        <div class="visual reveal"><div class="phone"><img src="/assets/img/02-sitios-mapa.webp" alt="Pantalla Sitios de NOTT: mapa de Murcia con los locales agrupados y una lista con Alter Ego, Sala Revolver y Plaza 3." width="600" height="1298" loading="lazy"></div></div>
+      </div>
+
+      <div class="feature">
+        <div class="copy reveal">
+          <div class="label"><span class="num">03</span><span class="kicker">La Sala</span></div>
+          <h3 class="display">Lo que se vive dentro.</h3>
+          <p class="body">Una foto desde el local, y solo si estás allí. Tus amigos la ven durante la noche y a mediodía desaparece. Lo de anoche, se queda en anoche.</p>
+          <ul class="ticks">
+            <li>Abierta de <span class="mono">20:00</span> a <span class="mono">08:00</span></li>
+            <li>Solo publicas si estás dentro del local</li>
+            <li>A las <span class="mono">12:00</span> las fotos dejan de verse</li>
+          </ul>
+        </div>
+        <div class="visual reveal"><div class="sala" role="img" aria-label="Maqueta de La Sala: estás en Corleone, con fotos de la noche que desaparecen a las 12:00.">
+          <div class="screen">
+            <span class="island"></span>
+            <h4>La Sala</h4>
+            <p class="sub">Murcia · lo que se vive dentro</p>
+            <div class="here">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 14.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+              <span><b>Estás en Corleone</b><small>Sube la foto de tu noche</small></span>
+            </div>
+            <div class="grid">
+              <div class="shot s1"><span>@lumina</span></div>
+              <div class="shot s2"><span>@marta.g</span></div>
+              <div class="shot s3"><span>@pablo</span></div>
+              <div class="shot s4"><span>@alba</span></div>
+            </div>
+            <div class="timer"><span>se borra en</span><b>7 h 12 min</b></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="feature flip">
+        <div class="copy reveal">
+          <div class="label"><span class="num">04</span><span class="kicker">Cada local</span></div>
+          <h3 class="display">Todo lo del sitio, en una ficha.</h3>
+          <p class="body">Dirección, tipo de local, horario y cómo llegar. Elige qué noche vas, invita a tus amigos y compra la entrada desde el enlace oficial del local.</p>
+          <ul class="ticks">
+            <li>«Voy a ir» para hoy, mañana o el sábado</li>
+            <li>Invita a tus amigos al mismo sitio</li>
+            <li>Cómo llegar y comprar entradas, sin salir de la ficha</li>
+          </ul>
+        </div>
+        <div class="visual reveal"><div class="phone"><img src="/assets/img/03-ficha-local.webp" alt="Ficha del club Odiseo en NOTT: dirección, tipo, distancia, horario, selector de noche y botones «Voy a ir», «Cómo llegar», «Invitar amigos» y «Comprar entradas»." width="600" height="1298" loading="lazy"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="privacidad" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="kicker">Tu privacidad</p>
+        <h2 class="display">Tu noche es tuya.</h2>
+        <p>Compartes lo que quieres, con quien quieres, y nada más.</p>
+      </div>
+      <div class="cards3">
+        <article class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></div>
+          <h3 class="display">Tú decides quién te ve</h3>
+          <p>Solo tus amigos, amigos de amigos o todo el mundo. Lo cambias cuando quieras en Ajustes.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><path d="m4 4 16 16"/></svg></div>
+          <h3 class="display">Sin historial de dónde estás</h3>
+          <p>Usamos tu ubicación para el mapa y para La Sala, y ya. No guardamos por dónde has pasado.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></div>
+          <h3 class="display">Sin anuncios, sin vender tus datos</h3>
+          <p>No usamos lo que haces para publicidad ni te seguimos por otras apps. Y si te vas, borras tu cuenta desde la propia app.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="locales" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="kicker">Para locales</p>
+        <h2 class="display">Te traemos a la gente. La venta sigue siendo tuya.</h2>
+        <p>NOTT es donde tu público decide adónde ir esta noche. Cuando se decide por ti, lo mandamos a tu venta oficial.</p>
+      </div>
+      <article class="card venue reveal">
+        <div>
+          <span class="tag">Locales, salas y promotoras</span>
+          <h3 class="display">Tu local, en el móvil de quien está decidiendo dónde ir.</h3>
+          <p>Quien abre NOTT ve qué sitios tiene cerca, a cuáles van sus amigos y qué se vive dentro. Que tu local esté bien contado ahí se nota en la cola.</p>
+          <a class="btn btn-gold" href="mailto:soporte@nott.es?subject=Tengo%20un%20local">Hablemos: soporte@nott.es</a>
+        </div>
+        <ul class="ticks">
+          <li><span><b>En el mapa y en Descubrir</b>, con dirección, horario y cómo llegar.</span></li>
+          <li><span><b>La entrada se compra en tu ticketera oficial.</b> Nosotros ponemos al comprador; la venta, el cobro y el acceso siguen siendo tuyos.</span></li>
+          <li><span><b>El plan se contagia.</b> Cuando alguien dice «Voy a ir», sus amigos lo ven, y así llega más gente.</span></li>
+          <li><span><b>La Sala</b> enseña el ambiente de dentro, en directo y solo desde el local.</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="preguntas" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head center reveal">
+        <p class="kicker">Preguntas</p>
+        <h2 class="display">Lo que nos preguntan en la cola.</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal">
+          <summary>¿Cuánto cuesta?</summary>
+          <p>Nada. NOTT es gratis y no tiene anuncios.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿Está para Android?</summary>
+          <p>Por ahora solo para iPhone, en la App Store. La versión de Android está en camino.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿En qué ciudades funciona?</summary>
+          <p>Nacimos en Murcia y es donde más movimiento hay, pero el mapa ya tiene locales de otras ciudades de España y vamos sumando más.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿Por qué no veo La Sala?</summary>
+          <p>La Sala solo está abierta de 20:00 a 08:00. De 08:00 a 12:00 puedes ver «Anoche», y a partir de las 12:00 las fotos dejan de verse. Para publicar tienes que estar dentro del local.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿Quién puede ver lo que publico?</summary>
+          <p>Lo decides tú en <em>Ajustes → ¿Quién puede verte?</em>: solo tus amigos, amigos y amigos de amigos, o todos.</p>
+        </details>
+        <details class="reveal">
+          <summary>¿Vendéis entradas?</summary>
+          <p>No. Cuando un local vende entradas, el botón te lleva a su venta oficial y la compra se hace allí, con sus condiciones.</p>
+        </details>
+        <details class="reveal">
+          <summary>Antes tenía NOX. ¿Es lo mismo?</summary>
+          <p>Sí. NOX ahora se llama NOTT: misma app, mismos amigos y mismos planes. Los enlaces que ya compartiste siguen funcionando.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="final reveal" aria-labelledby="final-t">
+      <div>
+        <img class="mark" src="/assets/img/icon.webp" alt="" width="72" height="72" loading="lazy">
+        <h2 class="display" id="final-t">Esta noche empieza aquí.</h2>
+        <p>Descarga NOTT, añade a tus amigos y mira dónde está el plan.</p>
+        <div class="ctas">
+          <a class="btn btn-gold btn-store" href="https://apps.apple.com/es/app/id6797049428">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.93 1.16 9.2.77 1.1 1.68 2.35 2.88 2.3 1.16-.05 1.6-.75 3-.75 1.39 0 1.79.75 3.01.72 1.25-.02 2.03-1.12 2.79-2.23.88-1.28 1.24-2.53 1.26-2.59-.03-.01-2.42-.93-2.46-3.69zM14.1 5.86c.64-.78 1.07-1.85.95-2.93-.92.04-2.04.61-2.7 1.39-.59.69-1.11 1.79-.97 2.84 1.03.08 2.08-.52 2.72-1.3z"/></svg>
+            <span><small>Descárgala gratis en la</small><b>App Store</b></span>
+          </a>
+        </div>
+      </div>
+      <div class="qr">
+        <div class="code" role="img" aria-label="Código QR para descargar NOTT en la App Store"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path stroke="#0c0a10" d="M0 0.5h7m1 0h1m6 0h1m1 0h2m1 0h1m1 0h7M0 1.5h1m5 0h1m3 0h3m1 0h1m2 0h1m1 0h1m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h5m2 0h2m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m2 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m2 0h4m2 0h1m2 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h5m4 0h4M0 8.5h1m3 0h1m1 0h4m1 0h4m2 0h1m2 0h6m2 0h1M2 9.5h2m3 0h2m3 0h1m1 0h2m6 0h1m1 0h5M0 10.5h1m2 0h1m2 0h9m1 0h1m3 0h1m3 0h1m3 0h1M0 11.5h2m2 0h1m3 0h1m3 0h2m2 0h4m1 0h1m1 0h1m1 0h1m1 0h2M0 12.5h2m1 0h1m2 0h3m1 0h1m2 0h1m1 0h1m1 0h5m1 0h1m3 0h1M1 13.5h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h2m3 0h7M0 14.5h5m1 0h1m2 0h2m4 0h2m1 0h1m2 0h3m1 0h2m1 0h1M0 15.5h2m1 0h3m2 0h3m3 0h7m1 0h2m3 0h2M6 16.5h1m1 0h1m2 0h4m1 0h2m2 0h2m1 0h1m3 0h1M0 17.5h3m2 0h1m4 0h1m1 0h1m5 0h1m1 0h6m1 0h2M2 18.5h2m1 0h2m1 0h1m1 0h1m2 0h5m2 0h4m2 0h1m1 0h1M2 19.5h3m4 0h2m1 0h2m1 0h1m1 0h2m1 0h4m3 0h2M0 20.5h3m2 0h2m1 0h1m4 0h1m3 0h1m1 0h7m2 0h1M8 21.5h2m1 0h1m1 0h4m2 0h2m3 0h1m3 0h1M0 22.5h7m1 0h1m2 0h1m3 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 23.5h1m5 0h1m2 0h1m4 0h4m1 0h2m3 0h1m2 0h2M0 24.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h7M0 25.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m2 0h3m1 0h1m4 0h1M0 26.5h1m1 0h3m1 0h1m2 0h4m2 0h1m1 0h1m1 0h2m4 0h4M0 27.5h1m5 0h1m3 0h3m1 0h1m2 0h1m2 0h3m2 0h1m1 0h2M0 28.5h7m1 0h1m3 0h1m1 0h2m1 0h2m1 0h1m3 0h2m1 0h1"/></svg></div>
+        <p>Apunta con la cámara del iPhone</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div class="about">
+      <a class="brand" href="/"><img src="/assets/img/icon.webp" alt="" width="30" height="30" loading="lazy"><span>NOTT</span></a>
+      <p>La app para salir de noche con tus amigos. Hecha en Murcia.</p>
+    </div>
+    <div>
+      <h4>NOTT</h4>
+      <ul>
+        <li><a href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a></li>
+        <li><a href="/#locales">Para locales</a></li>
+        <li><a href="/soporte/">Soporte</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacidad/">Política de privacidad</a></li>
+        <li><a href="/terminos/">Términos y condiciones</a></li>
+        <li><a href="/eliminar-cuenta/">Eliminar cuenta</a></li>
+        <li><a href="/seguridad-infantil/">Seguridad infantil</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:soporte@nott.es">soporte@nott.es</a></li>
+        <li><a href="mailto:privacidad@nott.es">privacidad@nott.es</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal">
+    <span>© 2026 NOTT · Juan Ruiz Fernández</span>
+    <span>Solo para mayores de 18 años. Bebe con cabeza.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})
+  },{rootMargin:'0px 0px -8% 0px',threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
