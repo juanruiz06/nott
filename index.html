@@ -203,7 +203,11 @@ section.block{padding:96px 0}
 .ticks li::before{content:'';flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--gold-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4b740' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat;border:1px solid rgba(244,183,64,.35)}
 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid rgba(244,183,64,.4);color:var(--gold);font:600 13px/1 var(--mono)}
 .feature .label{display:flex;align-items:center;gap:12px}
+/* La ficha ocupa la mitad de arriba de la pantalla: el móvil asoma desde abajo de la tarjeta. */
+.visual.crop{padding-bottom:0}
+.visual.crop .phone{margin-bottom:-210px}
 @media (min-width:900px){
+  .visual.crop .phone{margin-bottom:-240px}
   .feature{grid-template-columns:1fr 1fr;gap:72px}
   .feature .phone{width:270px}
   .feature.flip .copy{order:2}
@@ -364,9 +368,9 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
         <p class="fine rise" style="animation-delay:.32s"><span>Gratis y sin anuncios</span><span>iPhone</span><span>Android, muy pronto</span><span>+18</span></p>
       </div>
 
-      <div class="stage" role="img" aria-label="Dos pantallas de NOTT: el mapa de locales de Murcia y la pestaña Ahora con un local recomendado para esta noche.">
-        <div class="phone p-back"><img src="/assets/img/02-sitios-mapa.webp" alt="" width="600" height="1298" fetchpriority="high"></div>
-        <div class="phone p-front"><img src="/assets/img/01-ahora-descubrir.webp" alt="" width="600" height="1298" fetchpriority="high"></div>
+      <div class="stage" role="img" aria-label="Dos pantallas de NOTT: el mapa de locales de Murcia y Descubrir con la discoteca Luminata ilustrada.">
+        <div class="phone p-back"><img src="/assets/img/02-sitios-mapa.webp?v=2" alt="" width="600" height="1304" fetchpriority="high"></div>
+        <div class="phone p-front"><img src="/assets/img/01-ahora-descubrir.webp?v=2" alt="" width="600" height="1304" fetchpriority="high"></div>
         <div class="chip live" aria-hidden="true"><span class="dot"></span>Sale esta noche</div>
         <div class="chip friends" aria-hidden="true"><span class="faces"><i>M</i><i>P</i><i>A</i><i>L</i></span>12 amigos van</div>
       </div>
@@ -399,7 +403,7 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
             <li>Descubrir te sugiere sitios cuando no hay plan</li>
           </ul>
         </div>
-        <div class="visual reveal"><div class="phone"><img src="/assets/img/01-ahora-descubrir.webp" alt="Pantalla Ahora de NOTT: el bar Alter Ego recomendado para esta noche, con los botones «Voy a ir» y «Entradas»." width="600" height="1298" loading="lazy"></div></div>
+        <div class="visual reveal"><div class="phone"><img src="/assets/img/01-ahora-descubrir.webp?v=2" alt="Pantalla Descubrir de NOTT: la discoteca Luminata con su ilustración, a 376 m, y el botón «Voy»." width="600" height="1304" loading="lazy"></div></div>
       </div>
 
       <div class="feature flip">
@@ -413,7 +417,7 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
             <li>Un toque y estás en la venta oficial del local</li>
           </ul>
         </div>
-        <div class="visual reveal"><div class="phone"><img src="/assets/img/02-sitios-mapa.webp" alt="Pantalla Sitios de NOTT: mapa de Murcia con los locales agrupados y una lista con Alter Ego, Sala Revolver y Plaza 3." width="600" height="1298" loading="lazy"></div></div>
+        <div class="visual reveal"><div class="phone"><img src="/assets/img/02-sitios-mapa.webp?v=2" alt="Pantalla Sitios de NOTT: mapa de Murcia con los locales agrupados y una lista con Luminata Disco, La Ronería y La Playa de La Merced." width="600" height="1304" loading="lazy"></div></div>
       </div>
 
       <div class="feature">
@@ -453,12 +457,12 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
           <h3 class="display">Todo lo del sitio, en una ficha.</h3>
           <p class="body">Dirección, tipo de local, horario y cómo llegar. Elige qué noche vas, invita a tus amigos y compra la entrada desde el enlace oficial del local.</p>
           <ul class="ticks">
-            <li>«Voy a ir» para hoy, mañana o el sábado</li>
+            <li>«Voy» para hoy, mañana o el sábado</li>
             <li>Invita a tus amigos al mismo sitio</li>
             <li>Cómo llegar y comprar entradas, sin salir de la ficha</li>
           </ul>
         </div>
-        <div class="visual reveal"><div class="phone"><img src="/assets/img/03-ficha-local.webp" alt="Ficha del club Odiseo en NOTT: dirección, tipo, distancia, horario, selector de noche y botones «Voy a ir», «Cómo llegar», «Invitar amigos» y «Comprar entradas»." width="600" height="1298" loading="lazy"></div></div>
+        <div class="visual crop reveal"><div class="phone"><img src="/assets/img/03-ficha-local.webp?v=2" alt="Ficha de Odiseo en NOTT: la ilustración del local, dirección, horario, distancia y los botones «Voy», «Cómo llegar», «Invitar» y «Entradas»." width="600" height="1304" loading="lazy"></div></div>
       </div>
     </div>
   </section>
@@ -507,7 +511,7 @@ footer .legal{max-width:calc(var(--wrap) - 2*var(--gutter));margin-inline:auto;p
         <ul class="ticks">
           <li><span><b>En el mapa y en Descubrir</b>, con dirección, horario y cómo llegar.</span></li>
           <li><span><b>La entrada se compra en tu ticketera oficial.</b> Nosotros ponemos al comprador; la venta, el cobro y el acceso siguen siendo tuyos.</span></li>
-          <li><span><b>El plan se contagia.</b> Cuando alguien dice «Voy a ir», sus amigos lo ven, y así llega más gente.</span></li>
+          <li><span><b>El plan se contagia.</b> Cuando alguien le da a «Voy», sus amigos lo ven, y así llega más gente.</span></li>
           <li><span><b>La Sala</b> enseña el ambiente de dentro, en directo y solo desde el local.</span></li>
         </ul>
       </article>
