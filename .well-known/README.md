@@ -1,19 +1,19 @@
 # `.well-known/` — enlaces que abren la app (iOS y Android)
 
 `apple-app-site-association` (AASA) es lo que hace que iOS abra la app en vez del
-navegador cuando alguien toca un enlace `https://nott.es/p/…`, `/e/…`, `/v/…` o
-`/u/…`. Hoy está **preparado pero no activo**: el Team ID ya es el real (`NW3H8PF3XV`, del
-proyecto iOS de la app); falta publicar un build de la app con `associatedDomains`
-(spec 042 §8, build 20; PR preparada en juanruiz06/nox).
+navegador cuando alguien toca un enlace `https://nott.es/p/…`, `/e/…`, `/v/…`, `/u/…`,
+`/g/…` o `/noche/…`. **Está activo**: la app lleva `associatedDomains` con
+`applinks:nott.es` desde la 1.2.0 (y `applinks:getnox.es` desde la 1.1.0). El Team ID es
+`NW3H8PF3XV.com.juanruiz.nox` (si cambiara, está en App Store Connect → Membership
+details).
 
-## Qué falta antes de activarlo
+`/noche/*` (las noches especiales, como la de Luminata) se añadió en octubre de 2026. No
+necesita build: la app ya entiende `https://nott.es/noche/<id>`; basta con que el path esté
+aquí.
 
-1. ~~Sustituir `TEAMID`~~ Hecho: `NW3H8PF3XV.com.juanruiz.nox` (si el Team ID cambiara,
-   está en App Store Connect → Membership details).
-2. En el repo de la app (`juanruiz06/nox`), añadir a `app.json`:
-   `expo.ios.associatedDomains: ["applinks:nott.es"]`. Cambia el fingerprint, así que
-   **exige build nuevo** (no llega por OTA).
-3. Comprobar que GitHub Pages lo sirve:
+## Al cambiar el fichero
+
+1. Comprobar que GitHub Pages lo sirve:
 
    ```bash
    curl -I https://nott.es/.well-known/apple-app-site-association
@@ -24,9 +24,10 @@ proyecto iOS de la app); falta publicar un build de la app con `associatedDomain
    exige `application/json` ni firma). Si algún día dejara de valer, la salida es mover
    el sitio a un hosting donde se pueda fijar la cabecera (Cloudflare Pages, Netlify).
 
-4. Verificar el fichero con el validador de Apple
+2. Verificar lo que tiene la CDN de Apple
    (<https://app-site-association.cdn-apple.com/a/v1/nott.es>) DESPUÉS de publicar:
-   la CDN de Apple lo cachea, puede tardar en refrescarse.
+   la CDN lo cachea y puede tardar horas o un día en refrescarse. Los iPhone, además, lo
+   vuelven a pedir al instalar o actualizar la app y de vez en cuando.
 
 ## Notas
 
@@ -34,10 +35,13 @@ proyecto iOS de la app); falta publicar un build de la app con `associatedDomain
   `/.well-known/apple-app-site-association`.
 - La raíz del repo tiene `.nojekyll`, que es lo que hace que GitHub Pages publique las
   carpetas que empiezan por punto (sin él, `.well-known/` no se serviría).
-- Mientras el AASA no esté activo, los enlaces siguen funcionando: abren la página
-  puente (`/p/`, `/e/`, `/v/`, `/u/`, `/a/`), que en iPhone intenta abrir la app sola
-  (iOS pregunta "¿Abrir esta página en NOTT?") y, si no está instalada, manda a la App
-  Store a los ~1,6 s; los botones quedan de respaldo.
+- Si un iPhone aún no tiene el AASA nuevo, el enlace abre la página puente (`/p/`, `/e/`,
+  `/v/`, `/u/`, `/g/`, `/a/`, `/noche/…`), que en iPhone intenta abrir la app sola (iOS
+  pregunta "¿Abrir esta página en NOTT?"). No redirige sola a la App Store: el botón
+  queda de respaldo.
+- **Android no abre `/noche/…` todavía**: sus paths van en el binario (`intentFilters`
+  de `app.json`), que hoy solo cubre `/p/ /e/ /v/ /u/ /g/`. Hasta el próximo binario,
+  `/noche/…` cae en la página puente, que ofrece «Abrir en NOTT» con un `intent://`.
 
 
 ---
