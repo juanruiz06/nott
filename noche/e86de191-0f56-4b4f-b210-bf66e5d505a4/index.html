@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0b16">
+<title>Noche NOTT en Luminata · NOTT</title>
+<meta name="description" content="Sube tu foto y sal en la pantalla.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOTT">
+<meta property="og:title" content="Noche NOTT en Luminata">
+<meta property="og:description" content="Sube tu foto y sal en la pantalla.">
+<meta property="og:image" content="https://nott.es/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nott.es/noche/e86de191-0f56-4b4f-b210-bf66e5d505a4/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Noche NOTT en Luminata">
+<meta name="twitter:description" content="Sube tu foto y sal en la pantalla.">
+<meta name="twitter:image" content="https://nott.es/og.png">
+<style>
+:root{--bg:#0e0b16;--surface:#171226;--text:#ece8f5;--muted:#a89fc4;--primary:#c9a24b;--border:#2a2340}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+.wrap{max-width:480px;margin:0 auto;padding:32px 20px 64px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+header.top .brand{font-weight:800;letter-spacing:.14em;color:var(--primary);font-size:20px}
+a{color:var(--primary)}
+h1{font-size:26px;margin:24px 0 8px;line-height:1.25}
+p{margin:0 0 14px}
+p.lead{color:var(--muted)}
+.actions{display:flex;flex-direction:column;gap:12px;margin:28px 0 8px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:14px 20px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;text-align:center}
+.btn-primary{background:var(--primary);color:#171226}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn:focus-visible{outline:3px solid var(--text);outline-offset:3px}
+.note{color:var(--muted);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+footer{margin-top:48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:18px}
+footer a{margin-right:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><span class="brand">NOTT</span></header>
+<h1>Noche NOTT en Luminata</h1>
+<p class="lead">Sube tu foto y sal en la pantalla.</p>
+<div class="actions">
+<a class="btn btn-primary" id="open" href="nott://noche/e86de191-0f56-4b4f-b210-bf66e5d505a4">Abrir en NOTT</a>
+<a class="btn btn-secondary" id="ios" href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a>
+<a class="btn btn-secondary" id="android" href="https://play.google.com/store/apps/details?id=com.juanruiz.nox" hidden>Descargar en Google Play</a>
+</div>
+<noscript><p class="note">Activa JavaScript para abrir la noche en la app, o descarga NOTT desde la App Store.</p></noscript>
+<script>
+// Spec 103 §11.4.5 · Página puente de una noche especial. El id va escrito aquí porque GitHub
+// Pages no tiene rutas dinámicas (un 404.html respondería 404 y WhatsApp no sacaría la vista
+// previa). Cada noche es una carpeta.
+//
+// - iPhone con NOTT: el universal link (AASA con /noche/*) abre la app antes de cargar esta
+//   página. Si llega aquí, autoOpen al nott:// (no nox://: la 1.0/1.1 no tienen la ruta). Sin
+//   App Store automática, como en e/ (QA 2026-09-14).
+// - Android: los intentFilters del binario no cubren /noche (D-F2-06). «Abrir en NOTT» va por
+//   intent://, que Chrome abre si la app está y, si no, lleva a Google Play por el package.
+(function(){
+  var ID='e86de191-0f56-4b4f-b210-bf66e5d505a4';
+  var ua=navigator.userAgent;
+  var open=document.getElementById('open');
+  if(/Android/i.test(ua)){
+    open.setAttribute('href','intent://noche/'+ID+'#Intent;scheme=nott;package=com.juanruiz.nox;end');
+    document.getElementById('ios').hidden=true;
+    document.getElementById('android').hidden=false;
+    return;
+  }
+  if(/iPhone|iPad|iPod/i.test(ua)){
+    setTimeout(function(){window.location.href='nott://noche/'+ID;},60);
+  }
+})();
+</script>
+<footer>
+<a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a>
+<p>© NOTT · nott.es</p>
+</footer>
+</div>
+</body>
+</html>
