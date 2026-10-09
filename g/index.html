@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0e0b16">
+<meta name="theme-color" content="#0c0a10">
+<meta name="color-scheme" content="dark">
 <title>Te han invitado a un grupo · NOTT</title>
 <meta name="description" content="Únete al grupo de tus amigos en NOTT.">
 <meta property="og:type" content="website">
@@ -19,83 +20,56 @@
 <meta name="twitter:title" content="Te han invitado a un grupo">
 <meta name="twitter:description" content="Únete al grupo de tus amigos en NOTT.">
 <meta name="twitter:image" content="https://nott.es/og.png">
-<style>
-:root{--bg:#0e0b16;--surface:#171226;--text:#ece8f5;--muted:#a89fc4;--primary:#c9a24b;--border:#2a2340}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
-[hidden]{display:none!important}
-.wrap{max-width:480px;margin:0 auto;padding:32px 20px 64px}
-header.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-header.top .brand{font-weight:800;letter-spacing:.14em;color:var(--primary);font-size:20px}
-a{color:var(--primary)}
-h1{font-size:26px;margin:24px 0 8px;line-height:1.25}
-p{margin:0 0 14px}
-p.lead{color:var(--muted)}
-.actions{display:flex;flex-direction:column;gap:12px;margin:28px 0 8px}
-.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:14px 20px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;text-align:center}
-.btn-primary{background:var(--primary);color:#171226}
-.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
-.btn:focus-visible{outline:3px solid var(--text);outline-offset:3px}
-.note{color:var(--muted);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
-.nav{margin-top:8px;font-size:14px}.nav a{margin-right:16px}
-footer{margin-top:48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:18px}
-footer a{margin-right:14px}
-</style>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/puente.css?v=1">
+<script>
+// Banner nativo de Safari: sabe si NOTT está instalada y dice «Abrir» (con este mismo enlace,
+// que la app entiende) u «Obtener». Va con document.write porque Safari solo lo lee al parsear.
+document.write('<meta name="apple-itunes-app" content="app-id=6797049428, app-argument='+location.href.replace(/["<>]/g,'')+'">');
+</script>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><span class="brand">NOTT</span></header>
-<h1>Te han invitado a un grupo</h1>
-<p class="lead">Ábrelo en NOTT para unirte al grupo y hablar con tu cuadrilla de dónde caéis esta noche.</p>
-<div class="actions">
-<a class="btn btn-primary" id="open" hidden>Abrir en NOTT</a>
-<a class="btn btn-secondary" href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a>
+<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="22" height="22"><span>NOTT</span></a></header>
+<main>
+<section class="hero">
+<img class="icon" src="/apple-touch-icon.png" alt="NOTT" width="84" height="84">
+<p class="kicker" id="kicker">Un grupo</p>
+<h1 id="title">Te han invitado a un grupo</h1>
+<p class="lead" id="lead">Únete y hablad de dónde caéis esta noche.</p>
+</section>
+<p class="note" id="missing" hidden>Este enlace viene incompleto, así que no podemos abrirte el grupo. Descarga NOTT y pídele a quien te lo mandó que te lo comparta otra vez.</p>
+<noscript><p class="note">Activa JavaScript para abrir el enlace en la app, o descarga NOTT en tu tienda.</p></noscript>
+<ol class="steps">
+<li class="step">
+<div class="step-head"><span class="num" aria-hidden="true">1</span><div><h2>Descarga NOTT</h2><p class="only-mobile" id="dl-hint">Es gratis. Si ya la tienes, pasa al paso 2.</p><p class="only-desktop">Es gratis, para iPhone y Android.</p></div></div>
+<div class="buttons">
+<a class="btn btn-gold btn-store only-ios" href="https://apps.apple.com/es/app/id6797049428"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.93 1.16 9.2.77 1.1 1.68 2.35 2.88 2.3 1.16-.05 1.6-.75 3-.75 1.39 0 1.79.75 3.01.72 1.25-.02 2.03-1.12 2.79-2.23.88-1.28 1.24-2.53 1.26-2.59-.03-.01-2.42-.93-2.46-3.69zM14.1 5.86c.64-.78 1.07-1.85.95-2.93-.92.04-2.04.61-2.7 1.39-.59.69-1.11 1.79-.97 2.84 1.03.08 2.08-.52 2.72-1.3z"/></svg><span class="store"><small>Descárgala en la</small><b>App Store</b></span></a>
+<a class="btn btn-gold btn-store only-android" href="https://play.google.com/store/apps/details?id=com.juanruiz.nox"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg><span class="store"><small>Descárgala en</small><b>Google Play</b></span></a>
 </div>
-<p class="note" id="missing" hidden>Este enlace viene incompleto, así que no podemos abrirte el grupo. Bájate NOTT y pídele a quien te lo mandó que te lo comparta otra vez.</p>
-<noscript><p class="note">Activa JavaScript para abrir el enlace en la app, o descarga NOTT desde la App Store.</p></noscript>
-<script>
-// spec 068: el esquema sigue siendo nox:// a propósito. Las versiones 1.0.0/1.1.0 solo entienden
-// ese; la 1.2.0 (NOTT) entiende nox:// y nott://. Cambiarlo dejaría fuera a los que no han actualizado.
-(function(){
-  var ID=/^[A-Za-z0-9._-]{1,80}$/;
-  function param(name){
-    var q=window.location.search.replace(/^\?/,'');
-    var parts=q.split('&');
-    for(var k=0;k<parts.length;k++){
-      if(!parts[k]){continue;}
-      var eq=parts[k].indexOf('=');
-      var key=eq===-1?parts[k]:parts[k].slice(0,eq);
-      if(decodeURIComponent(key.replace(/\+/g,' '))!==name){continue;}
-      var raw=eq===-1?'':parts[k].slice(eq+1);
-      try{return decodeURIComponent(raw.replace(/\+/g,' '));}catch(e){return '';}
-    }
-    return '';
-  }
-  function ok(v,re){return v&&re.test(v)?v:'';}
-  // Si NOTT está instalada, iOS pregunta "¿Abrir en NOTT?" y la abre con el nox://. Aquí
-  // SOLO se intenta abrir la app: la App Store automática se quitó (QA 2026-09-14) porque
-  // con el aviso de iOS en pantalla la página sigue visible y el temporizador mandaba a la
-  // App Store aunque la app se abriera. El botón "Descargar en la App Store" ya lleva allí.
-  // Con los universal links (build 20) iOS abrirá la app antes de cargar esta página.
-  function autoOpen(target){
-    if(!/iPhone|iPad|iPod/i.test(navigator.userAgent)){return;}
-    setTimeout(function(){window.location.href=target;},60);
-  }
-
-  var btn=document.getElementById('open'), miss=document.getElementById('missing');
-  var href=(function(){
-    // Token de invitación: base62 de 22 (spec 045 D23), más estrecho que los ids.
-    var t=ok(param('i'),/^[0-9A-Za-z]{22}$/);
-    return t?'nox://g/'+t:'';
-  })();
-  if(href){btn.setAttribute('href',href);btn.hidden=false;autoOpen(href);}
-  else{miss.hidden=false;}
-})();
-</script>
+</li>
+<li class="step" id="step-open" hidden>
+<div class="step-head"><span class="num" aria-hidden="true">2</span><div><h2>Ábrelo en NOTT</h2><p class="only-mobile" id="open-hint">Cuando la tengas, toca aquí: entras directo al grupo.</p><p class="only-desktop">Abre este enlace desde el móvil donde tengas NOTT.</p></div></div>
+<div class="buttons only-mobile"><a class="btn btn-ghost" id="open">Abrir en NOTT</a></div>
+</li>
+</ol>
+</main>
 <footer>
-<a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a>
+<nav><a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a></nav>
 <p>© NOTT · nott.es</p>
 </footer>
 </div>
+<script src="/assets/puente.js?v=1"></script>
+<script>
+NottPuente.init({
+  path:function(param,ok){
+    var t=ok(param('i'),/^[0-9A-Za-z]{22}$/);
+    return t?'g/'+t:'';
+  }
+});
+</script>
 </body>
 </html>
