@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0b16">
+<title>Luminata &amp; NOTT · Viernes 16 de octubre</title>
+<meta name="description" content="Viernes 16 de octubre en Luminata, Murcia. Descarga NOTT y entra en la noche.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOTT">
+<meta property="og:title" content="Luminata &amp; NOTT · Viernes 16 de octubre">
+<meta property="og:description" content="Descarga NOTT y entra en la noche.">
+<meta property="og:image" content="https://nott.es/luminata/cartel.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="1200">
+<meta property="og:url" content="https://nott.es/luminata/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nott.es/luminata/cartel.jpg">
+<style>
+:root{--bg:#0e0b16;--surface:#171226;--text:#ece8f5;--muted:#a89fc4;--primary:#c9a24b;--border:#2a2340}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+.wrap{max-width:480px;margin:0 auto;padding:20px 16px 48px}
+img.cartel{display:block;width:100%;height:auto;border-radius:16px}
+p.lead{color:var(--muted);text-align:center;margin:18px 0 0}
+.actions{display:flex;flex-direction:column;gap:12px;margin:18px 0 8px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:14px 20px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;text-align:center}
+.btn-primary{background:var(--primary);color:#171226}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn:focus-visible{outline:3px solid var(--text);outline-offset:3px}
+footer{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+footer a{color:var(--primary);margin-right:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<img class="cartel" src="cartel.jpg" alt="Luminata &amp; NOTT · Viernes 16 de octubre · Murcia centro" width="800" height="1200">
+<p class="lead" id="lead">Abriendo NOTT…</p>
+<div class="actions">
+<a class="btn btn-primary" id="open" href="nott://noche/e86de191-0f56-4b4f-b210-bf66e5d505a4">Ya tengo NOTT: abrir la noche</a>
+<a class="btn btn-secondary" id="ios" href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a>
+<a class="btn btn-secondary" id="android" href="https://play.google.com/store/apps/details?id=com.juanruiz.nox">Descargar en Google Play</a>
+</div>
+<script>
+// Enlace corto para el sticker de Instagram (historias de la noche de Luminata, 16/10).
+//
+// Instagram abre los enlaces en su navegador interno, donde los universal links (/noche/*) NO
+// abren la app. Así que aquí se intenta el esquema y, si la app no se abre, a la tienda:
+// - iPhone: nott://noche/<id>. Si sigue la página visible a los 1,5 s, es que no está
+//   instalada (o es la 1.0/1.1, que no tiene la ruta) → App Store.
+// - Android: intent:// con S.browser_fallback_url a Google Play (Chrome lo hace solo) y el mismo
+//   temporizador de respaldo para el navegador de Instagram, que no siempre respeta el fallback.
+// Si la app se abre, la página pasa a oculta y se cancela el salto a la tienda.
+(function(){
+  var ID='e86de191-0f56-4b4f-b210-bf66e5d505a4';
+  var PKG='com.juanruiz.nox';
+  var APPSTORE='https://apps.apple.com/es/app/id6797049428';
+  var PLAY='https://play.google.com/store/apps/details?id='+PKG;
+  var ua=navigator.userAgent||'';
+  var ios=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+  var android=/Android/i.test(ua);
+  var open=document.getElementById('open');
+  var lead=document.getElementById('lead');
+
+  if(!ios&&!android){
+    lead.textContent='Abre este enlace desde el móvil, o descarga NOTT:';
+    open.hidden=true;
+    return;
+  }
+  document.getElementById(ios?'android':'ios').hidden=true;
+
+  var appHref=android
+    ?'intent://noche/'+ID+'#Intent;scheme=nott;package='+PKG+';S.browser_fallback_url='+encodeURIComponent(PLAY)+';end'
+    :'nott://noche/'+ID;
+  var store=android?PLAY:APPSTORE;
+  open.setAttribute('href',appHref);
+
+  var timer=null;
+  function cancel(){if(timer){clearTimeout(timer);timer=null;}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){cancel();}});
+  window.addEventListener('pagehide',cancel);
+  window.addEventListener('blur',cancel);
+
+  setTimeout(function(){
+    window.location.href=appHref;
+    timer=setTimeout(function(){
+      timer=null;
+      if(document.hidden){return;}
+      lead.textContent='¿No tienes NOTT? Descárgala y vuelve a tocar el enlace.';
+      window.location.href=store;
+    },1500);
+  },100);
+})();
+</script>
+<noscript><p class="lead">Descarga NOTT en la App Store o Google Play.</p></noscript>
+<footer>
+<a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a>
+<p>© NOTT · nott.es</p>
+</footer>
+</div>
+</body>
+</html>
