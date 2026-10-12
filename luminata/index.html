@@ -6,11 +6,11 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0e0b16">
 <title>Luminata &amp; NOTT · Viernes 16 de octubre</title>
-<meta name="description" content="Viernes 16 de octubre en Luminata, Murcia. Descarga NOTT y entra en la noche.">
+<meta name="description" content="Viernes 16 de octubre en Luminata, Murcia. Opening NOTT en Luminata. Descarga NOTT y apúntate.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NOTT">
 <meta property="og:title" content="Luminata &amp; NOTT · Viernes 16 de octubre">
-<meta property="og:description" content="Descarga NOTT y entra en la noche.">
+<meta property="og:description" content="Opening NOTT en Luminata. Descarga NOTT y apúntate.">
 <meta property="og:image" content="https://nott.es/luminata/cartel.jpg">
 <meta property="og:image:width" content="800">
 <meta property="og:image:height" content="1200">
@@ -39,22 +39,29 @@ footer a{color:var(--primary);margin-right:14px}
 <img class="cartel" src="cartel.jpg" alt="Luminata &amp; NOTT · Viernes 16 de octubre · Murcia centro" width="800" height="1200">
 <p class="lead" id="lead">Abriendo NOTT…</p>
 <div class="actions">
-<a class="btn btn-primary" id="open" href="nott://noche/e86de191-0f56-4b4f-b210-bf66e5d505a4">Ya tengo NOTT: abrir la noche</a>
+<a class="btn btn-primary" id="open" href="https://lista.nott.es/f/KF3AdDeMReai">Ya tengo NOTT: abrir la fiesta</a>
 <a class="btn btn-secondary" id="ios" href="https://apps.apple.com/es/app/id6797049428">Descargar en la App Store</a>
 <a class="btn btn-secondary" id="android" href="https://play.google.com/store/apps/details?id=com.juanruiz.nox">Descargar en Google Play</a>
 </div>
 <script>
-// Enlace corto para el sticker de Instagram (historias de la noche de Luminata, 16/10).
+// Enlace corto para el sticker de Instagram: el evento «Opening NOTT en Luminata» (16/10).
 //
-// Instagram abre los enlaces en su navegador interno, donde los universal links (/noche/*) NO
-// abren la app. Así que aquí se intenta el esquema y, si la app no se abre, a la tienda:
-// - iPhone: nott://noche/<id>. Si sigue la página visible a los 1,5 s, es que no está
-//   instalada (o es la 1.0/1.1, que no tiene la ruta) → App Store.
+// Instagram abre los enlaces en su navegador interno, donde los universal links NO abren la app.
+// Así que aquí se intenta el esquema y, si la app no se abre, a la tienda:
+// - El id del evento no va escrito: se pide a la RPC pública get_public_party con el slug de la
+//   fiesta de NOTT Lista (la misma que usa lista.nott.es/f/<slug>, con la anon key publicable).
+//   Si la fiesta cambia de evento, el enlace sigue valiendo.
+// - iPhone: nox://event/<id>?date=… (nox:// y no nott://: lo entienden también la 1.0/1.1, como
+//   en assets/puente.js). Si sigue la página visible a los 1,5 s, no está instalada → App Store.
 // - Android: intent:// con S.browser_fallback_url a Google Play (Chrome lo hace solo) y el mismo
 //   temporizador de respaldo para el navegador de Instagram, que no siempre respeta el fallback.
+// - Si la RPC falla, a la página de la fiesta en NOTT Lista (tiene su propio «Ábrela en la app»).
 // Si la app se abre, la página pasa a oculta y se cancela el salto a la tienda.
 (function(){
-  var ID='e86de191-0f56-4b4f-b210-bf66e5d505a4';
+  var SLUG='KF3AdDeMReai';
+  var PARTY='https://lista.nott.es/f/'+SLUG;
+  var SUPABASE='https://bnflrplxyninklpoygxu.supabase.co';
+  var ANON='sb_publishable_TCa1Mzo-boDmmjHSV4bVpQ_YAKg63Nl';
   var PKG='com.juanruiz.nox';
   var APPSTORE='https://apps.apple.com/es/app/id6797049428';
   var PLAY='https://play.google.com/store/apps/details?id='+PKG;
@@ -63,19 +70,15 @@ footer a{color:var(--primary);margin-right:14px}
   var android=/Android/i.test(ua);
   var open=document.getElementById('open');
   var lead=document.getElementById('lead');
+  open.setAttribute('href',PARTY);
 
   if(!ios&&!android){
     lead.textContent='Abre este enlace desde el móvil, o descarga NOTT:';
-    open.hidden=true;
+    open.textContent='Ver la fiesta';
     return;
   }
   document.getElementById(ios?'android':'ios').hidden=true;
-
-  var appHref=android
-    ?'intent://noche/'+ID+'#Intent;scheme=nott;package='+PKG+';S.browser_fallback_url='+encodeURIComponent(PLAY)+';end'
-    :'nott://noche/'+ID;
   var store=android?PLAY:APPSTORE;
-  open.setAttribute('href',appHref);
 
   var timer=null;
   function cancel(){if(timer){clearTimeout(timer);timer=null;}}
@@ -83,7 +86,19 @@ footer a{color:var(--primary);margin-right:14px}
   window.addEventListener('pagehide',cancel);
   window.addEventListener('blur',cancel);
 
-  setTimeout(function(){
+  var done=false;
+  function go(eventId,date){
+    if(done){return;}
+    done=true;
+    if(!eventId){
+      window.location.href=PARTY;
+      return;
+    }
+    var path='event/'+encodeURIComponent(eventId)+(date?'?date='+encodeURIComponent(date):'');
+    var appHref=android
+      ?'intent://'+path+'#Intent;scheme=nox;package='+PKG+';S.browser_fallback_url='+encodeURIComponent(PLAY)+';end'
+      :'nox://'+path;
+    open.setAttribute('href',appHref);
     window.location.href=appHref;
     timer=setTimeout(function(){
       timer=null;
@@ -91,7 +106,24 @@ footer a{color:var(--primary);margin-right:14px}
       lead.textContent='¿No tienes NOTT? Descárgala y vuelve a tocar el enlace.';
       window.location.href=store;
     },1500);
-  },100);
+  }
+
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST',SUPABASE+'/rest/v1/rpc/get_public_party');
+  xhr.setRequestHeader('apikey',ANON);
+  xhr.setRequestHeader('Authorization','Bearer '+ANON);
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.timeout=4000;
+  xhr.onload=function(){
+    var d=null;
+    try{d=JSON.parse(xhr.responseText);}catch(e){}
+    if(d&&d.length){d=d[0];}
+    var id=d&&/^[A-Za-z0-9._-]{1,80}$/.test(d.event_id||'')?d.event_id:'';
+    var date=d&&/^\d{4}-\d{2}-\d{2}$/.test(d.plan_date||'')?d.plan_date:'';
+    go(xhr.status===200?id:'',date);
+  };
+  xhr.onerror=xhr.ontimeout=function(){go('','');};
+  xhr.send(JSON.stringify({p_slug:SLUG}));
 })();
 </script>
 <noscript><p class="lead">Descarga NOTT en la App Store o Google Play.</p></noscript>
