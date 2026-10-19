@@ -63,7 +63,16 @@ document.write('<meta name="apple-itunes-app" content="app-id=6797049428, app-ar
 </div>
 <script src="/assets/puente.js?v=1"></script>
 <script>
-NottPuente.init({ path:function(){ return 'feed'; } });
+var CODE=/^[0-9A-Za-z]{22}$/;
+NottPuente.init({
+  path:function(param,ok){
+    // Enlace de RRPP o de embajador (nott-es/nox#527): el código viaja al nox://feed para que
+    // la app lo reclame y el servidor apunte el alta a quien repartió el enlace, sin amistad.
+    // Sin «c» (o con uno mal formado) se abre el río sin más, como antes.
+    var code=ok(param('c'),CODE);
+    return 'feed'+(code?'?c='+encodeURIComponent(code):'');
+  }
+});
 </script>
 </body>
 </html>
