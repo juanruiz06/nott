@@ -63,7 +63,13 @@ document.write('<meta name="apple-itunes-app" content="app-id=6797049428, app-ar
 </div>
 <script src="/assets/puente.js?v=1"></script>
 <script>
-NottPuente.init({ path:function(){ return 'feed'; } });
+NottPuente.init({
+  path:function(param,ok){
+    // c: el código del RRPP que reparte el enlace; la app apunta el alta a su nombre.
+    var c=ok(param('c'),/^[0-9A-Za-z]{22}$/);
+    return 'feed'+(c?'?c='+encodeURIComponent(c):'');
+  }
+});
 </script>
 </body>
 </html>
