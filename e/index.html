@@ -69,8 +69,11 @@ NottPuente.init({
     var i=ok(param('i'),NottPuente.ID);
     if(!i){return '';}
     var d=ok(param('d'),/^\d{4}-\d{2}-\d{2}$/), u=ok(param('u'),NottPuente.ID), q=[];
+    // r: quien te invitó a la fiesta (token de 10 o código de RRPP); en la app se llama invite.
+    var r=ok(param('r'),/^(?:[0-9A-Za-z]{10}|[a-z0-9-]{3,24})$/);
     if(d){q.push('date='+encodeURIComponent(d));}
     if(u){q.push('user='+encodeURIComponent(u));}
+    if(r){q.push('invite='+encodeURIComponent(r));}
     return 'event/'+encodeURIComponent(i)+(q.length?'?'+q.join('&'):'');
   }
 });
