@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="no-referrer" />
+    <title>NOTT</title>
+    <script>
+      // GitHub Pages no tiene rutas dinámicas: solo reenviar enlaces de grupo válidos.
+      var group = location.pathname.match(
+        /^\/g\/((?:g2_)?[0-9A-Za-z]{22})\/?$/,
+      );
+      if (group) location.replace("/g/?i=" + encodeURIComponent(group[1]));
+    </script>
+    <link rel="stylesheet" href="/assets/puente.css?v=1" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Abre tu invitación en NOTT.</h1>
+      <p>
+        Si este enlace está incompleto, pide a quien te lo envió que lo comparta
+        otra vez.
+      </p>
+      <a href="/">Volver a NOTT</a>
+    </main>
+  </body>
+</html>
