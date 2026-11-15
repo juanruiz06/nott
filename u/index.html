@@ -62,7 +62,7 @@ document.write('<meta name="apple-itunes-app" content="app-id=6797049428, app-ar
 <p>© NOTT · nott.es</p>
 </footer>
 </div>
-<script src="/assets/puente.js?v=1"></script>
+<script src="/assets/puente.js?v=2"></script>
 <script>
 var CODE=/^[0-9A-Za-z]{22}$/, code='';
 NottPuente.init({
@@ -74,6 +74,8 @@ NottPuente.init({
     code=ok(param('c'),CODE);
     return 'profile/'+encodeURIComponent(i)+(code?'?c='+encodeURIComponent(code):'');
   },
+  // El mismo código tiene que llegar a la app aunque se instale desde la tienda (ver puente.js).
+  codigo:function(param){return param('c');},
   after:function(path){
     // Solo se enmarca como invitación si el enlace está completo: con «c» pero sin «i» no hay
     // adónde ir, y «te han invitado» junto a «este enlace viene incompleto» es absurdo.
