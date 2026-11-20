@@ -1,0 +1,52 @@
+/* Páginas de local, de evento y de ciudad (tools/fichas): encima de puente.css, con su misma
+   paleta y fuentes. Sin JavaScript. */
+.wrap.ficha{max-width:640px}
+.ficha main{display:flex;flex-direction:column;gap:22px;padding-top:6px}
+.ficha h2{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.25;margin-bottom:12px}
+
+.migas ol{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px;font-size:13px;color:var(--faint)}
+.migas li+li::before{content:"›";margin-right:6px}
+.migas a{color:var(--muted);text-decoration:none}
+
+.cabeza h1{font-size:clamp(30px,8vw,42px)}
+.cabeza .kicker{margin:10px 0 0}
+.cabeza .lead{margin-top:12px}
+.cabeza .lugar{color:var(--fg-2);margin-top:10px}
+.cabeza .lugar a{color:var(--gold);text-decoration:none}
+
+.portada,.cartel{margin:0}
+.portada img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:20px;background:var(--surface)}
+.cartel img{width:100%;max-width:420px;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:20px;background:var(--surface)}
+.portada figcaption{font-size:12px;color:var(--faint);margin-top:8px}
+
+.texto p{color:var(--fg-2);font-size:17px;line-height:1.6;white-space:pre-line;text-wrap:pretty}
+
+.datos{display:flex;flex-direction:column;gap:12px}
+.datos>p{display:flex;flex-direction:column;color:var(--fg)}
+.datos>p span{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.noches ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.noche{display:flex;gap:14px;align-items:center;padding:10px;border-radius:18px;background:var(--surface);border:1px solid var(--line-subtle);text-decoration:none}
+.noche img,.cartel-vacio{flex:none;width:72px;height:90px;border-radius:12px;object-fit:cover;background:var(--surface-2)}
+.noche-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.noche-fecha{font-size:13px;color:var(--gold);font-weight:600}
+.noche-fecha::first-letter{text-transform:uppercase}
+.noche-titulo{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.chip{align-self:flex-start;font-size:13px;color:var(--fg-2);background:var(--surface-2);border-radius:999px;padding:2px 10px}
+.chip-off{color:var(--muted)}
+
+.compra{display:flex;flex-direction:column;gap:12px}
+.precio{font-family:var(--display);font-size:22px;font-weight:700}
+.aviso{color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+
+.app{background:var(--surface);border:1px solid var(--line-subtle);border-radius:20px;padding:18px}
+.app p{color:var(--muted);font-size:15px;margin:-4px 0 14px}
+.tiendas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tiendas .btn{min-height:48px;font-size:15px}
+
+.tuyo a{color:var(--gold);font-weight:600;text-decoration:none}
+
+.mas ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.mas a{display:inline-block;padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line-subtle);color:var(--fg-2);text-decoration:none;font-size:15px}
+
+footer .fix{margin-bottom:10px}
