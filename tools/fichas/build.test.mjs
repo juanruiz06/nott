@@ -43,6 +43,7 @@ test('un local sin dirección, horario, portada ni venta sale entero y sin hueco
   assert.ok(!/undefined|NaN|>null</.test(html), 'sin «undefined» ni «null» en la página');
   assert.ok(html.includes('@bardos'), 'la fila de Instagram enseña la cuenta');
   assert.ok(!html.includes('<b>Entradas</b>'), 'sin enlace de venta no hay fila de entradas');
+  assert.ok(!/<title>[^<]*entradas/.test(html), 'ni «entradas» en el título');
   assert.ok(html.includes('class="f-fija"><a class="f-btn f-btn-oro" href="https://www.google.com/maps/'), 'la acción fija es «Cómo llegar»');
 });
 
@@ -50,6 +51,7 @@ test('con enlace de venta: fila «Entradas» con nofollow y la acción fija va a
   const html = hacer().archivos.get('murcia/sala-uno/index.html');
   assert.ok(html.includes('href="https://fourvenues.com/es/sala-uno" rel="nofollow noopener"'));
   assert.ok(html.includes('<small>fourvenues.com</small>'));
+  assert.ok(html.includes('<title>Sala Uno, Murcia: entradas y cómo llegar | NOTT</title>'));
   assert.ok(html.includes('class="f-fija"><a class="f-btn f-btn-oro" href="https://fourvenues.com/es/sala-uno"'));
   assert.ok(html.includes('Ilustración de NOTT'), 'portada de IA con su leyenda');
   assert.ok(html.includes('¿Es tu local?'));

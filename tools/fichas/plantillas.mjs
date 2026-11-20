@@ -272,8 +272,9 @@ export function paginaLocal(local, ctx) {
   }
   if (instagram) negocio.sameAs = [instagram];
 
+  // «entradas» en el título solo si el local tiene dónde comprarlas.
   const t = titulo(
-    `${local.name}, ${ctx.ciudad.nombre}: entradas y cómo llegar | NOTT`,
+    ...(ticket ? [`${local.name}, ${ctx.ciudad.nombre}: entradas y cómo llegar | NOTT`] : []),
     `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre} | NOTT`,
     `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre}`,
     `${local.name} | NOTT`,
