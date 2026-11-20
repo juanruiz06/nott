@@ -176,6 +176,13 @@ test('escribir: solo toca su manifest, borra lo que deja de salir y no pisa lo h
   await assert.rejects(escribir(raiz, hacer(choque).archivos), /no es del generador/);
 });
 
+test('una descripción con línea en blanco sale en dos párrafos', () => {
+  const d = copia();
+  d.locales[1].description = 'Primer párrafo del bar.\n\nSegundo párrafo.';
+  const html = hacer(d).archivos.get('murcia/bar-dos/index.html');
+  assert.ok(html.includes('<section class="texto"><p>Primer párrafo del bar.</p><p>Segundo párrafo.</p></section>'));
+});
+
 test('ayudas: resumen, urlSegura e isoLocal', () => {
   assert.equal(resumen('Primera frase. Segunda frase.'), 'Primera frase.');
   assert.ok(resumen('a '.repeat(200)).length <= 155);

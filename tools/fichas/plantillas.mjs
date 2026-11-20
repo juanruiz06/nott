@@ -20,6 +20,16 @@ export function h(valor) {
     .replace(/'/g, '&#39;');
 }
 
+/** Un texto con párrafos separados por una línea en blanco, como <p> escapados. */
+export function parrafos(texto) {
+  return String(texto ?? '')
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `<p>${h(p)}</p>`)
+    .join('');
+}
+
 /** JSON-LD inerte dentro de <script>: ningún `<` puede cerrar la etiqueta. */
 export function jsonLd(objeto) {
   const texto = JSON.stringify(objeto).replace(/</g, '\\u003c');
@@ -336,7 +346,7 @@ export function paginaLocal(local, ctx) {
 </section>
 `;
   }
-  html += `<section class="texto"><p>${h(local.description)}</p></section>
+  html += `<section class="texto">${parrafos(local.description)}</section>
 <section class="datos">
 `;
   if (local.address) html += `<p><span>Dirección</span>${h(local.address)}</p>\n`;
@@ -459,7 +469,7 @@ export function paginaEvento(local, ev, ctx) {
   if (cartel) {
     html += `<figure class="cartel"><img src="${h(cartel)}" alt="${h(ev.titulo)}" width="800" height="1000" fetchpriority="high"></figure>\n`;
   }
-  if (ev.descripcion) html += `<section class="texto"><p>${h(ev.descripcion)}</p></section>\n`;
+  if (ev.descripcion) html += `<section class="texto">${parrafos(ev.descripcion)}</section>\n`;
   html += llamadaApp(local.venue_id, 'Mira quién va');
   const otras = ctx.otras.filter((o) => o.slug !== ev.slug);
   if (otras.length > 0) {
