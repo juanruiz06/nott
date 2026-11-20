@@ -1,5 +1,4 @@
 {
-  "ahora": "2026-12-01T12:00:00Z",
   "locales": [
     {
       "venue_id": "00000000-0000-4000-8000-000000000001",
@@ -10,7 +9,17 @@
       "venue_type": "club",
       "description": "Sala Uno es la discoteca grande de la muestra, con reggaeton y comercial los jueves universitarios. Se llena a partir de la una y la puerta es tranquila si llegas pronto. Esta descripción es de prueba y tiene que pasar de trescientos caracteres para parecerse a una de verdad, así que sigue un poco más.",
       "address": "Calle de Prueba 1, Murcia",
-      "opening_hours": [{ "days": ["Th", "Fr", "Sa"], "opens": "00:00", "closes": "06:00" }],
+      "opening_hours": [
+        {
+          "days": [
+            "Th",
+            "Fr",
+            "Sa"
+          ],
+          "opens": "00:00",
+          "closes": "06:00"
+        }
+      ],
       "cover_url": "https://cdn.example/uno.webp",
       "cover_source": "ai",
       "ticket_url": "https://fourvenues.com/es/sala-uno",
@@ -36,82 +45,5 @@
       "updated_at": "2026-11-19T10:00:00Z",
       "website_url": "https://google-web.example"
     }
-  ],
-  "eventosWeb": {
-    "locales_vinculados": ["00000000-0000-4000-8000-000000000001"],
-    "eventos": [
-      {
-        "slug": "abc123def456",
-        "venue_id": "00000000-0000-4000-8000-000000000001",
-        "titulo": "Nochevieja en Sala Uno",
-        "descripcion": "La última noche del año, con cotillón.",
-        "cartel_url": "https://cdn.example/nochevieja.webp",
-        "empieza_en": "2026-12-31T23:00:00Z",
-        "termina_en": "2027-01-01T06:00:00Z",
-        "zona_horaria": "Europe/Madrid",
-        "estado": "abierto",
-        "ticketing": "propio",
-        "enlace_externo": null,
-        "organizacion": "Grupo Uno",
-        "precio_desde_centimos": 2500,
-        "moneda": "EUR",
-        "agotado": false,
-        "actualizado_en": "2026-11-20T09:00:00Z"
-      },
-      {
-        "slug": "semana000001",
-        "venue_id": "00000000-0000-4000-8000-000000000001",
-        "titulo": "Jueves universitario",
-        "descripcion": null,
-        "cartel_url": null,
-        "empieza_en": "2026-12-03T23:00:00Z",
-        "termina_en": "2026-12-04T05:00:00Z",
-        "zona_horaria": "Europe/Madrid",
-        "estado": "abierto",
-        "ticketing": "externo",
-        "enlace_externo": "https://fourvenues.com/es/sala-uno/jueves",
-        "organizacion": "Grupo Uno",
-        "precio_desde_centimos": 0,
-        "moneda": "EUR",
-        "agotado": true,
-        "actualizado_en": "2026-11-20T09:00:00Z"
-      },
-      {
-        "slug": "pasado000001",
-        "venue_id": "00000000-0000-4000-8000-000000000001",
-        "titulo": "Ya pasó",
-        "descripcion": null,
-        "cartel_url": null,
-        "empieza_en": "2026-11-20T23:00:00Z",
-        "termina_en": "2026-11-21T05:00:00Z",
-        "zona_horaria": "Europe/Madrid",
-        "estado": "abierto",
-        "ticketing": "propio",
-        "enlace_externo": null,
-        "organizacion": "Grupo Uno",
-        "precio_desde_centimos": 1000,
-        "moneda": "EUR",
-        "agotado": false,
-        "actualizado_en": "2026-11-20T09:00:00Z"
-      },
-      {
-        "slug": "sinpagina001",
-        "venue_id": "00000000-0000-4000-8000-000000000099",
-        "titulo": "De un local sin página",
-        "descripcion": null,
-        "cartel_url": null,
-        "empieza_en": "2026-12-05T23:00:00Z",
-        "termina_en": "2026-12-06T05:00:00Z",
-        "zona_horaria": "Europe/Madrid",
-        "estado": "abierto",
-        "ticketing": "propio",
-        "enlace_externo": null,
-        "organizacion": "Otra",
-        "precio_desde_centimos": 1000,
-        "moneda": "EUR",
-        "agotado": false,
-        "actualizado_en": "2026-11-20T09:00:00Z"
-      }
-    ]
-  }
+  ]
 }

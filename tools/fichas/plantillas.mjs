@@ -1,10 +1,10 @@
-// Plantillas de las páginas de local, de evento y de ciudad de nott.es (spec 134 v2 de nott-es/nox).
-// Todo es HTML completo, legible sin JavaScript. Todo texto que llega de la base pasa por `h()`
-// (HTML) o por `jsonLd()` (datos estructurados): la descripción de un evento la escribe la
-// organización, y la de un local la escribirá el local.
+// Plantillas de las páginas de local y de ciudad de nott.es (spec 134 v2 de nott-es/nox).
+// Estructura sacada de referencias de Mobbin (20/11): foto a sangre con el nombre encima, datos en
+// filas con icono, una sola acción fija abajo en el móvil, la app en un banner pequeño y la ciudad
+// como lista con miniaturas. Todo es HTML completo, legible sin JavaScript. Todo texto que llega de
+// la base pasa por `h()` (HTML) o por `jsonLd()` (datos estructurados).
 
 export const ORIGEN = 'https://nott.es';
-export const FICHA_SAAS = 'https://lista.nott.es/saas/f/';
 const APP_STORE = 'https://apps.apple.com/es/app/id6797049428?ct=web-local';
 const PLAY =
   'https://play.google.com/store/apps/details?id=com.juanruiz.nox&referrer=utm_source%3Dnott.es%26utm_medium%3Dweb-local';
@@ -74,9 +74,18 @@ export function resumen(texto, max = 155) {
   const limpio = String(texto ?? '')
     .replace(/\s+/g, ' ')
     .trim();
-  const frase = limpio.match(/^.+?[.!?](\s|$)/)?.[0]?.trim() ?? limpio;
+  // Una frase acaba en . ! ? seguido de espacio y mayúscula: «R.E.M. es» no corta.
+  const frase = limpio.split(/(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ¿¡])/)[0];
   if (frase.length <= max) return frase;
   return frase.slice(0, max - 1).replace(/\s+\S*$/, '') + '…';
+}
+
+/** El resumen para la lista de la ciudad, sin repetir el nombre: «Odiseo es un complejo…» → «Un complejo…». */
+export function subtitulo(local, max = 90) {
+  const r = resumen(local.description, 200);
+  const sin = r.startsWith(`${local.name} es `) ? r.slice(local.name.length + 4) : r;
+  const frase = sin.charAt(0).toUpperCase() + sin.slice(1);
+  return frase.length <= max ? frase : frase.slice(0, max - 1).replace(/\s+\S*$/, '') + '…';
 }
 
 /** El título más largo que cabe en 60 caracteres, de las opciones dadas. */
@@ -84,76 +93,44 @@ function titulo(...opciones) {
   return opciones.find((t) => t.length <= 60) ?? opciones[opciones.length - 1];
 }
 
-// ─── Fechas ───────────────────────────────────────────────────────────────────────────────────
-
-function partes(fecha, zona, opciones) {
-  return Object.fromEntries(
-    new Intl.DateTimeFormat('es-ES', { timeZone: zona, ...opciones })
-      .formatToParts(new Date(fecha))
-      .map((p) => [p.type, p.value]),
-  );
+/** «fourvenues.com» de una URL, para la línea pequeña de una fila. */
+function dominio(url) {
+  try {
+    return new URL(url).hostname.replace(/^(www|site)\./, '');
+  } catch {
+    return '';
+  }
 }
 
-/** «sáb 27 dic · 23:30», en la hora del evento. */
-export function fechaCorta(fecha, zona) {
-  const p = partes(fecha, zona, {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h23',
-  });
-  return `${p.weekday.replace('.', '')} ${p.day} ${p.month.replace('.', '')} · ${p.hour}:${p.minute}`;
-}
-
-/** «sábado 27 de diciembre», en la hora del evento. */
-export function fechaLarga(fecha, zona) {
-  const p = partes(fecha, zona, { weekday: 'long', day: 'numeric', month: 'long' });
-  return `${p.weekday} ${p.day} de ${p.month}`;
-}
-
-/** «2026-12-27T23:30:00+01:00»: la hora local del evento con su desfase (lo pide schema.org). */
-export function isoLocal(fecha, zona) {
-  const p = partes(fecha, zona, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hourCycle: 'h23',
-    timeZoneName: 'longOffset',
-  });
-  const desfase = p.timeZoneName === 'GMT' ? '+00:00' : p.timeZoneName.replace('GMT', '');
-  return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}${desfase}`;
-}
-
-/** «desde 12 €», «Gratis» o «Con lista». */
-export function precioTexto(ev) {
-  if (ev.precio_desde_centimos == null) return 'Con lista';
-  if (ev.precio_desde_centimos === 0) return 'Gratis';
-  const euros = ev.precio_desde_centimos / 100;
-  const cifra = Number.isInteger(euros) ? String(euros) : euros.toFixed(2).replace('.', ',');
-  return `desde ${cifra} €`;
+/** «@salarevolver» de una URL de Instagram. */
+function cuentaInstagram(url) {
+  const m = /instagram\.com\/([A-Za-z0-9._]+)/.exec(url ?? '');
+  return m ? `@${m[1]}` : 'Instagram';
 }
 
 // ─── Rutas ────────────────────────────────────────────────────────────────────────────────────
 
 export const rutaCiudad = (c) => `/${c}/`;
 export const rutaLocal = (l) => `/${l.city_slug}/${l.slug}/`;
-export const rutaEvento = (l, ev) => `/${l.city_slug}/${l.slug}/${ev.slug}/`;
 
-/** A dónde lleva «Comprar entradas» de un evento, o null si no hay dónde. */
-export function urlCompra(ev) {
-  if (ev.estado === 'cancelado') return null;
-  if (ev.ticketing === 'externo') return urlSegura(ev.enlace_externo);
-  return /^[a-z0-9]{12}$/.test(ev.slug) ? FICHA_SAAS + ev.slug : null;
-}
+// ─── Iconos (trazo, 24×24, currentColor) ─────────────────────────────────────────────────────
+
+const ICONO = {
+  pin: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/>',
+  ticket:
+    '<path d="M4 8.5V6.8C4 6.4 4.4 6 4.8 6h14.4c.4 0 .8.4.8.8v1.7a2.5 2.5 0 0 0 0 5v1.7c0 .4-.4.8-.8.8H4.8c-.4 0-.8-.4-.8-.8v-1.7a2.5 2.5 0 0 0 0-5Z"/><path d="M14.5 6.5v11" stroke-dasharray="1.6 1.8"/>',
+  insta:
+    '<rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r=".9" fill="currentColor" stroke="none"/>',
+  reloj: '<circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/>',
+  salir: '<path d="M9 7h8v8"/><path d="M17 7 7 17"/>',
+  flecha: '<path d="m9 6 6 6-6 6"/>',
+};
+const icono = (n, clase = '') =>
+  `<svg class="ico ${clase}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONO[n]}</svg>`;
 
 // ─── Piezas comunes ───────────────────────────────────────────────────────────────────────────
 
-function cabecera({ titulo: t, descripcion, ruta, imagen, noindex, ld }) {
+function cabecera({ titulo: t, descripcion, ruta, imagen, noindex, ld, clase }) {
   const url = ORIGEN + ruta;
   const img = imagen ?? `${ORIGEN}/og.png`;
   return `<!doctype html>
@@ -182,28 +159,27 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-co
 <link rel="preload" href="/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/puente.css?v=1">
-<link rel="stylesheet" href="/assets/fichas.css?v=1">
+<link rel="stylesheet" href="/assets/fichas.css?v=2">
 <meta name="apple-itunes-app" content="app-id=6797049428">
 ${jsonLd({ '@context': 'https://schema.org', '@graph': ld })}
 </head>
-<body>
-<div class="wrap ficha">
-<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="22" height="22"><span>NOTT</span></a></header>
-<main>
+<body class="f ${clase}">
+`;
+}
+
+function barra(venueId) {
+  const abrir = venueId ? `/v/?i=${encodeURIComponent(venueId)}` : '/descargar/';
+  return `<header class="f-barra"><a class="f-marca" href="/"><img src="/favicon.png" alt="" width="24" height="24"><span>NOTT</span></a><a class="f-pastilla" href="${h(abrir)}">Abrir la app</a></header>
 `;
 }
 
 function pie(asunto) {
   const mailto = `mailto:${SOPORTE}?subject=${encodeURIComponent(asunto)}`;
-  return `</main>
-<footer>
-<p class="fix"><a href="${h(mailto)}">¿Algo está mal en esta página?</a></p>
+  return `<footer class="f-pie">
+<a href="${h(mailto)}">¿Algo está mal en esta página?</a>
 <nav><a href="/privacidad/">Privacidad</a><a href="/terminos/">Términos</a><a href="/soporte/">Soporte</a></nav>
 <p>© NOTT · nott.es</p>
 </footer>
-</div>
-</body>
-</html>
 `;
 }
 
@@ -215,7 +191,7 @@ function migas(items) {
         : `<li><a href="${h(it.ruta)}">${h(it.nombre)}</a></li>`,
     )
     .join('');
-  return `<nav class="migas" aria-label="Migas"><ol>${html}</ol></nav>\n`;
+  return `<nav class="f-migas" aria-label="Migas"><ol>${html}</ol></nav>\n`;
 }
 
 function migasLd(items) {
@@ -230,48 +206,39 @@ function migasLd(items) {
   };
 }
 
-function llamadaApp(venueId, texto) {
-  return `<section class="app">
-<h2>${h(texto)}</h2>
-<p>Con NOTT ves qué planes hay esta noche y quién de tu gente va.</p>
-<div class="buttons">
-<a class="btn btn-gold" href="/v/?i=${h(encodeURIComponent(venueId))}">Abrir en NOTT</a>
-<div class="tiendas"><a class="btn btn-ghost" href="${h(APP_STORE)}">App Store</a><a class="btn btn-ghost" href="${h(PLAY)}">Google Play</a></div>
-</div>
-</section>
+/** El banner pequeño de la app: una línea y un botón. */
+function bannerApp(venueId, texto) {
+  const abrir = venueId ? `/v/?i=${encodeURIComponent(venueId)}` : '/descargar/';
+  return `<aside class="f-app">
+<img src="/apple-touch-icon.png" alt="" width="44" height="44">
+<div><b>${h(texto)}</b><span>Gratis en <a href="${h(APP_STORE)}">App Store</a> y <a href="${h(PLAY)}">Google Play</a></span></div>
+<a class="f-btn f-btn-claro" href="${h(abrir)}">Abrir</a>
+</aside>
 `;
 }
 
-function tarjetaEvento(local, ev) {
-  const cartel = urlSegura(ev.cartel_url);
-  const estado =
-    ev.estado === 'cancelado'
-      ? '<span class="chip chip-off">Cancelado</span>'
-      : ev.agotado
-        ? '<span class="chip chip-off">Agotado</span>'
-        : `<span class="chip">${h(precioTexto(ev))}</span>`;
-  return `<li><a class="noche" href="${h(rutaEvento(local, ev))}">${
-    cartel
-      ? `<img src="${h(cartel)}" alt="" width="120" height="150" loading="lazy" decoding="async">`
-      : '<span class="cartel-vacio" aria-hidden="true"></span>'
-  }<span class="noche-txt"><span class="noche-fecha">${h(fechaCorta(ev.empieza_en, ev.zona_horaria))}</span><span class="noche-titulo">${h(ev.titulo)}</span>${estado}</span></a></li>`;
+function fila({ href, ico, titulo: t, sub, externo }) {
+  const rel = externo ? ' rel="nofollow noopener"' : '';
+  const inner = `${icono(ico)}<span class="f-fila-txt"><b>${h(t)}</b>${sub ? `<small>${h(sub)}</small>` : ''}</span>`;
+  return href
+    ? `<li><a class="f-fila" href="${h(href)}"${rel}>${inner}${icono(externo ? 'salir' : 'flecha', 'f-fila-ir')}</a></li>`
+    : `<li><div class="f-fila">${inner}</div></li>`;
 }
 
 // ─── Página de un local ───────────────────────────────────────────────────────────────────────
 
 /**
  * @param {object} local   fila de get_web_venues
- * @param {object} ctx     { ciudad, eventos (del local, ya filtrados y ordenados), vinculado,
- *                           otros (locales de la ciudad), noindex }
+ * @param {object} ctx     { ciudad, otros (locales de la ciudad), noindex }
  */
 export function paginaLocal(local, ctx) {
   const tipo = tipoDe(local.venue_type);
   const ruta = rutaLocal(local);
-  const conNoches = ctx.eventos.length > 0;
   const portada = urlSegura(local.cover_url);
   const ticket = urlSegura(local.ticket_url);
   const instagram = urlSegura(local.instagram_url);
-  const consulta = encodeURIComponent(`${local.name}, ${ctx.ciudad.nombre}`);
+  const consulta = encodeURIComponent(`${local.name}, ${local.address ?? ctx.ciudad.nombre}`);
+  const mapa = `https://www.google.com/maps/search/?api=1&query=${consulta}`;
   const items = [
     { nombre: 'NOTT', ruta: '/' },
     { nombre: ctx.ciudad.nombre, ruta: rutaCiudad(local.city_slug) },
@@ -294,29 +261,23 @@ export function paginaLocal(local, ctx) {
       addressCountry: 'ES',
     };
   }
-  if (Array.isArray(local.opening_hours) && local.opening_hours.length > 0) {
+  const horario = Array.isArray(local.opening_hours) && local.opening_hours.length > 0;
+  if (horario) {
     negocio.openingHoursSpecification = local.opening_hours.map((t) => ({
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: (t.days ?? [])
-        .filter((d) => DIAS[d])
-        .map((d) => `https://schema.org/${DIAS[d][1]}`),
+      dayOfWeek: (t.days ?? []).filter((d) => DIAS[d]).map((d) => `https://schema.org/${DIAS[d][1]}`),
       opens: t.opens,
       closes: t.closes,
     }));
   }
   if (instagram) negocio.sameAs = [instagram];
 
-  const t = conNoches
-    ? titulo(
-        `${local.name}, ${ctx.ciudad.nombre}: entradas y próximas noches | NOTT`,
-        `${local.name}, ${ctx.ciudad.nombre}: entradas | NOTT`,
-        `${local.name}: entradas | NOTT`,
-      )
-    : titulo(
-        `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre} | NOTT`,
-        `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre}`,
-        `${local.name} | NOTT`,
-      );
+  const t = titulo(
+    `${local.name}, ${ctx.ciudad.nombre}: entradas y cómo llegar | NOTT`,
+    `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre} | NOTT`,
+    `${local.name} · ${tipo.texto} en ${ctx.ciudad.nombre}`,
+    `${local.name} | NOTT`,
+  );
 
   let html = cabecera({
     titulo: t,
@@ -325,161 +286,66 @@ export function paginaLocal(local, ctx) {
     imagen: portada,
     noindex: ctx.noindex,
     ld: [negocio, migasLd(items)],
+    clase: 'f-local',
   });
-  html += migas(items);
-  html += `<section class="cabeza">
+  html += barra(local.venue_id);
+
+  // Portada a sangre con el nombre encima.
+  html += `<section class="f-hero${portada ? '' : ' f-hero-sin'}">
+${portada ? `<img class="f-hero-img" src="${h(portada)}" alt="${h(local.cover_source === 'ai' ? `Ilustración de ${local.name}` : local.name)}" width="1200" height="800" fetchpriority="high">` : ''}
+<div class="f-hero-txt">
+<p class="f-tipo">${h(tipo.texto)} · ${h(ctx.ciudad.nombre)}</p>
 <h1>${h(local.name)}</h1>
-<p class="kicker">${h(tipo.texto)} · ${h(ctx.ciudad.nombre)}</p>
+</div>
+${portada && local.cover_source === 'ai' ? '<span class="f-ilu">Ilustración de NOTT</span>' : ''}
 </section>
+<main class="f-main">
 `;
-  if (portada) {
-    const ia = local.cover_source === 'ai';
-    html += `<figure class="portada"><img src="${h(portada)}" alt="${h(ia ? `Ilustración de ${local.name}` : local.name)}" width="1200" height="800" fetchpriority="high">${
-      ia ? '<figcaption>Ilustración de NOTT</figcaption>' : ''
-    }</figure>
-`;
-  }
-  if (conNoches) {
-    html += `<section class="noches" id="noches">
-<h2>Próximas noches</h2>
-<ul>${ctx.eventos.map((ev) => tarjetaEvento(local, ev)).join('')}</ul>
-</section>
-`;
-  }
-  html += `<section class="texto">${parrafos(local.description)}</section>
-<section class="datos">
-`;
-  if (local.address) html += `<p><span>Dirección</span>${h(local.address)}</p>\n`;
-  if (Array.isArray(local.opening_hours) && local.opening_hours.length > 0) {
-    const lineas = local.opening_hours
-      .map(
-        (t) =>
-          `${(t.days ?? [])
-            .filter((d) => DIAS[d])
-            .map((d) => DIAS[d][0])
-            .join(', ')}: ${t.opens}–${t.closes}`,
-      )
-      .map((l) => h(l))
-      .join('<br>');
-    html += `<p><span>Horario</span>${lineas}</p>\n`;
-  }
-  html += `<div class="buttons">
-`;
-  if (conNoches) html += `<a class="btn btn-gold" href="#noches">Entradas</a>\n`;
-  else if (ticket) html += `<a class="btn btn-gold" href="${h(ticket)}" rel="nofollow noopener">Entradas</a>\n`;
-  html += `<a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=${h(consulta)}" rel="nofollow noopener">Cómo llegar</a>
-`;
-  if (instagram) html += `<a class="btn btn-ghost" href="${h(instagram)}" rel="nofollow noopener">Instagram</a>\n`;
-  html += `</div>
-</section>
-`;
-  html += llamadaApp(local.venue_id, 'Mira quién va esta noche');
-  if (!ctx.vinculado) {
-    const asunto = `Quiero vender entradas de ${local.name} con NOTT`;
-    html += `<section class="tuyo"><a href="mailto:${h(SOPORTE)}?subject=${h(encodeURIComponent(asunto))}">¿Es tu local? Vende tus entradas con NOTT</a></section>
-`;
-  }
-  if (ctx.otros.length > 0) {
-    html += `<section class="mas">
-<h2>Más sitios en ${h(ctx.ciudad.nombre)}</h2>
-<ul>${ctx.otros.map((o) => `<li><a href="${h(rutaLocal(o))}">${h(o.name)}</a></li>`).join('')}</ul>
-</section>
-`;
-  }
-  return html + pie(`Error en la página de ${local.name}`);
-}
-
-// ─── Página de un evento ──────────────────────────────────────────────────────────────────────
-
-export function paginaEvento(local, ev, ctx) {
-  const ruta = rutaEvento(local, ev);
-  const cartel = urlSegura(ev.cartel_url);
-  const compra = urlCompra(ev);
-  const cancelado = ev.estado === 'cancelado';
-  const items = [
-    { nombre: 'NOTT', ruta: '/' },
-    { nombre: ctx.ciudad.nombre, ruta: rutaCiudad(local.city_slug) },
-    { nombre: local.name, ruta: rutaLocal(local) },
-    { nombre: ev.titulo, ruta },
-  ];
-  const dia = fechaLarga(ev.empieza_en, ev.zona_horaria);
-  const lugar = { '@type': 'Place', name: local.name, url: ORIGEN + rutaLocal(local) };
-  lugar.address = {
-    '@type': 'PostalAddress',
-    addressLocality: ctx.ciudad.nombre,
-    addressCountry: 'ES',
-    ...(local.address ? { streetAddress: local.address } : {}),
-  };
-  const evento = {
-    '@type': 'Event',
-    name: ev.titulo,
-    url: ORIGEN + ruta,
-    startDate: isoLocal(ev.empieza_en, ev.zona_horaria),
-    endDate: isoLocal(ev.termina_en, ev.zona_horaria),
-    eventStatus: `https://schema.org/${cancelado ? 'EventCancelled' : 'EventScheduled'}`,
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    location: lugar,
-    organizer: { '@type': 'Organization', name: ev.organizacion },
-  };
-  if (cartel) evento.image = [cartel];
-  if (ev.descripcion) evento.description = ev.descripcion;
-  if (compra && ev.precio_desde_centimos != null) {
-    evento.offers = {
-      '@type': 'AggregateOffer',
-      lowPrice: (ev.precio_desde_centimos / 100).toFixed(2),
-      priceCurrency: ev.moneda ?? 'EUR',
-      availability: `https://schema.org/${ev.agotado ? 'SoldOut' : 'InStock'}`,
-      url: compra,
-    };
-  }
-
-  const t = titulo(
-    `${ev.titulo} · ${local.name}, ${ctx.ciudad.nombre} | NOTT`,
-    `${ev.titulo} · ${local.name} | NOTT`,
-    `${ev.titulo} | NOTT`,
-  );
-  let html = cabecera({
-    titulo: t,
-    descripcion: resumen(ev.descripcion || `${ev.titulo} en ${local.name}, ${ctx.ciudad.nombre}, el ${dia}.`),
-    ruta,
-    imagen: cartel,
-    noindex: ctx.noindex,
-    ld: [evento, migasLd(items)],
-  });
   html += migas(items);
-  html += `<section class="cabeza">
-<p class="kicker">${h(fechaCorta(ev.empieza_en, ev.zona_horaria))}</p>
-<h1>${h(ev.titulo)}</h1>
-<p class="lugar">en <a href="${h(rutaLocal(local))}">${h(local.name)}</a> · Organiza ${h(ev.organizacion)}</p>
+  html += `<div class="f-cols">
+<section class="f-texto">${parrafos(local.description)}</section>
+<div class="f-lado">
+<section class="f-info" aria-labelledby="info">
+<h2 id="info">Información</h2>
+<ul class="f-filas">
+`;
+  html += fila({ href: mapa, ico: 'pin', titulo: 'Cómo llegar', sub: local.address ?? `${local.name}, ${ctx.ciudad.nombre}`, externo: true });
+  if (ticket) html += fila({ href: ticket, ico: 'ticket', titulo: 'Entradas', sub: dominio(ticket), externo: true });
+  if (instagram) html += fila({ href: instagram, ico: 'insta', titulo: 'Instagram', sub: cuentaInstagram(instagram), externo: true });
+  if (horario) {
+    const lineas = local.opening_hours
+      .map((x) => `${(x.days ?? []).filter((d) => DIAS[d]).map((d) => DIAS[d][0]).join(', ')}: ${x.opens}–${x.closes}`)
+      .join(' · ');
+    html += fila({ ico: 'reloj', titulo: 'Horario', sub: lineas });
+  }
+  html += `</ul>
+</section>
+${bannerApp(local.venue_id, `Mira quién va a ${local.name} esta noche`)}
+</div>
+</div>
+`;
+  if (ctx.otros.length > 0) {
+    html += `<section class="f-mas">
+<div class="f-mas-cab"><h2>Más sitios en ${h(ctx.ciudad.nombre)}</h2><a href="${h(rutaCiudad(local.city_slug))}">Ver todos</a></div>
+<ul class="f-carrusel">${ctx.otros
+      .map((o) => {
+        const img = urlSegura(o.cover_url);
+        return `<li><a href="${h(rutaLocal(o))}">${img ? `<img src="${h(img)}" alt="" width="240" height="300" loading="lazy" decoding="async">` : '<span class="f-sin-foto"></span>'}<b>${h(o.name)}</b><small>${h(tipoDe(o.venue_type).texto)}</small></a></li>`;
+      })
+      .join('')}</ul>
 </section>
 `;
-  // La compra va antes del cartel: quien llega desde Google viene a comprar.
-  html += `<section class="compra">
-`;
-  if (cancelado) html += '<p class="aviso">Este evento se ha cancelado.</p>\n';
-  else {
-    html += `<p class="precio">${h(ev.agotado ? 'Agotado' : precioTexto(ev))}</p>\n`;
-    if (compra && !ev.agotado) {
-      const rel = ev.ticketing === 'externo' ? ' rel="nofollow noopener"' : '';
-      html += `<a class="btn btn-gold" href="${h(compra)}"${rel}>Comprar entradas</a>\n`;
-    }
   }
-  html += `</section>
+  const asunto = `Quiero vender entradas de ${local.name} con NOTT`;
+  html += `<p class="f-tuyo">¿Es tu local? <a href="mailto:${h(SOPORTE)}?subject=${h(encodeURIComponent(asunto))}">Vende tus entradas con NOTT</a></p>
+</main>
 `;
-  if (cartel) {
-    html += `<figure class="cartel"><img src="${h(cartel)}" alt="${h(ev.titulo)}" width="800" height="1000" fetchpriority="high"></figure>\n`;
-  }
-  if (ev.descripcion) html += `<section class="texto">${parrafos(ev.descripcion)}</section>\n`;
-  html += llamadaApp(local.venue_id, 'Mira quién va');
-  const otras = ctx.otras.filter((o) => o.slug !== ev.slug);
-  if (otras.length > 0) {
-    html += `<section class="noches">
-<h2>Más noches en ${h(local.name)}</h2>
-<ul>${otras.map((o) => tarjetaEvento(local, o)).join('')}</ul>
-</section>
-`;
-  }
-  return html + pie(`Error en la página de ${ev.titulo}`);
+  html += pie(`Error en la página de ${local.name}`);
+  // Una sola acción fija abajo en el móvil: entradas si las hay; si no, cómo llegar.
+  html += ticket
+    ? `<div class="f-fija"><a class="f-btn f-btn-oro" href="${h(ticket)}" rel="nofollow noopener">${icono('ticket')}Entradas</a></div>\n`
+    : `<div class="f-fija"><a class="f-btn f-btn-oro" href="${h(mapa)}" rel="nofollow noopener">${icono('pin')}Cómo llegar</a></div>\n`;
+  return html + '</body>\n</html>\n';
 }
 
 // ─── Página de una ciudad ─────────────────────────────────────────────────────────────────────
@@ -514,26 +380,32 @@ export function paginaCiudad(citySlug, ctx) {
     ruta,
     noindex: ctx.noindex,
     ld: [lista, migasLd(items)],
+    clase: 'f-ciudad',
   });
+  html += barra(null);
+  html += `<main class="f-main">
+`;
   html += migas(items);
-  html += `<section class="cabeza">
+  html += `<section class="f-cab">
 <h1>Discotecas y bares de copas en ${h(ctx.ciudad.nombre)}</h1>
-<p class="lead">${h(ctx.ciudad.entradilla)}</p>
+<p>${h(ctx.ciudad.entradilla)}</p>
 </section>
 `;
-  if (ctx.semana.length > 0) {
-    html += `<section class="noches">
-<h2>Esta semana en ${h(ctx.ciudad.nombre)}</h2>
-<ul>${ctx.semana.map(({ local, ev }) => tarjetaEvento(local, ev)).join('')}</ul>
-</section>
-`;
-  }
   for (const [g, locales] of grupos) {
-    html += `<section class="mas">
-<h2>${h(g)}</h2>
-<ul>${locales.map((l) => `<li><a href="${h(rutaLocal(l))}">${h(l.name)}</a></li>`).join('')}</ul>
+    html += `<section class="f-grupo">
+<h2>${h(g)} <span>${locales.length}</span></h2>
+<ul class="f-lista">${locales
+      .map((l) => {
+        const img = urlSegura(l.cover_url);
+        return `<li><a href="${h(rutaLocal(l))}">${img ? `<img src="${h(img)}" alt="" width="160" height="160" loading="lazy" decoding="async">` : '<span class="f-sin-foto"></span>'}<span class="f-lista-txt"><b>${h(l.name)}</b><small>${h(subtitulo(l))}</small></span>${icono('flecha', 'f-fila-ir')}</a></li>`;
+      })
+      .join('')}</ul>
 </section>
 `;
   }
-  return html + pie(`Error en la página de ${ctx.ciudad.nombre}`);
+  html += bannerApp(null, `Mira quién sale esta noche en ${ctx.ciudad.nombre}`);
+  html += `</main>
+`;
+  html += pie(`Error en la página de ${ctx.ciudad.nombre}`);
+  return html + '</body>\n</html>\n';
 }

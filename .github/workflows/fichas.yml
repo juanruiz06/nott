@@ -1,4 +1,4 @@
-# Páginas de local, de evento y de ciudad de nott.es (tools/fichas, spec 134 v2 de nott-es/nox).
+# Páginas de local y de ciudad de nott.es (tools/fichas, spec 134 v2 de nott-es/nox).
 #
 # - En cada PR que toca tools/fichas: los tests del generador.
 # - Cada hora (y a mano, o por repository_dispatch «fichas»): genera las páginas desde Supabase y

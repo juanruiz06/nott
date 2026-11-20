@@ -1,13 +1,12 @@
-# Páginas de local, de evento y de ciudad
+# Páginas de local y de ciudad
 
-Genera `nott.es/<ciudad>/`, `nott.es/<ciudad>/<local>/` y `nott.es/<ciudad>/<local>/<evento>/`,
-más `sitemap.xml` y `robots.txt`. La spec es la 134 v2 de `nott-es/nox`
-(`docs/spec-fichas-web-seo-2026-11.md`).
+Genera `nott.es/<ciudad>/` y `nott.es/<ciudad>/<local>/`, más `sitemap.xml` y `robots.txt`. La spec
+es la 134 v2 de `nott-es/nox` (`docs/spec-fichas-web-seo-2026-11.md`).
 
 | Fichero            | Qué es                                                                                   |
 | ------------------ | ---------------------------------------------------------------------------------------- |
 | `build.mjs`        | Lee Supabase, construye las páginas y las escribe. Node 22, sin dependencias              |
-| `plantillas.mjs`   | El HTML y los datos estructurados (JSON-LD) de cada tipo de página                       |
+| `plantillas.mjs`   | El HTML y los datos estructurados (JSON-LD) de la página de local y la de ciudad         |
 | `ciudades.json`    | Nombre y entradilla de cada ciudad (a mano). Una ciudad que falta hace fallar el build   |
 | `manifest.json`    | Lo que escribió la última pasada. Lo escribe el build: no se toca a mano                 |
 | `muestra.json`     | Datos de prueba para los tests                                                           |
@@ -16,12 +15,9 @@ más `sitemap.xml` y `robots.txt`. La spec es la 134 v2 de `nott-es/nox`
 
 ## De dónde salen los datos
 
-- `public.get_web_venues()`: las páginas de local publicadas (tabla `venue_web`, con revisión del
-  owner). Es obligatoria: si devuelve 0 filas o falla, el build falla y no borra nada.
-- `venta.eventos_web()`: los eventos públicos del SaaS 2.0 de los locales vinculados. Es opcional:
-  mientras no exista en la base (`PGRST202` o `PGRST106`), las páginas salen sin eventos.
-
-Las dos se llaman con la key publicable. Ninguna clave secreta entra en este repo.
+`public.get_web_venues()`: las páginas de local publicadas (tabla `venue_web`, con revisión del
+owner), con la key publicable. Si devuelve 0 filas o falla, el build falla y no borra nada. No hay
+eventos (decisión del owner, 2026-11-20): la página enlaza a la venta que ya tenga el local.
 
 ## Reglas
 
@@ -30,7 +26,6 @@ Las dos se llaman con la key publicable. Ninguna clave secreta entra en este rep
 - Una ciudad no puede llamarse como una ruta que ya existe en la raíz (`RESERVADOS` en `build.mjs`).
 - Todo texto de la base se escapa; los enlaces de fuera solo valen con `https://` y llevan
   `rel="nofollow"`.
-- La compra de un evento es la ficha del SaaS (`lista.nott.es/saas/f/<slug>`): aquí solo se enlaza.
 
 ## En local
 
