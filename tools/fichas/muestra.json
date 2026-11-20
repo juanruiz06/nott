@@ -1,0 +1,49 @@
+{
+  "locales": [
+    {
+      "venue_id": "00000000-0000-4000-8000-000000000001",
+      "city": "Murcia",
+      "city_slug": "murcia",
+      "slug": "sala-uno",
+      "name": "Sala Uno",
+      "venue_type": "club",
+      "description": "Sala Uno es la discoteca grande de la muestra, con reggaeton y comercial los jueves universitarios. Se llena a partir de la una y la puerta es tranquila si llegas pronto. Esta descripción es de prueba y tiene que pasar de trescientos caracteres para parecerse a una de verdad, así que sigue un poco más.",
+      "address": "Calle de Prueba 1, Murcia",
+      "opening_hours": [
+        {
+          "days": [
+            "Th",
+            "Fr",
+            "Sa"
+          ],
+          "opens": "00:00",
+          "closes": "06:00"
+        }
+      ],
+      "cover_url": "https://cdn.example/uno.webp",
+      "cover_source": "ai",
+      "ticket_url": "https://fourvenues.com/es/sala-uno",
+      "instagram_url": null,
+      "popularity": 10,
+      "updated_at": "2026-11-20T10:00:00Z"
+    },
+    {
+      "venue_id": "00000000-0000-4000-8000-000000000002",
+      "city": "Murcia",
+      "city_slug": "murcia",
+      "slug": "bar-dos",
+      "name": "Bar Dos",
+      "venue_type": "bar",
+      "description": "Bar Dos es un bar de copas pequeño para la previa. Sin dirección, sin horario y sin portada: la página tiene que salir igual de bien, sin huecos. Texto de prueba suficientemente largo para la check de la base, que pide al menos trescientos caracteres en cada descripción publicada, así que alargamos.",
+      "address": null,
+      "opening_hours": null,
+      "cover_url": null,
+      "cover_source": null,
+      "ticket_url": null,
+      "instagram_url": "https://www.instagram.com/bardos/",
+      "popularity": 3,
+      "updated_at": "2026-11-19T10:00:00Z",
+      "website_url": "https://google-web.example"
+    }
+  ]
+}

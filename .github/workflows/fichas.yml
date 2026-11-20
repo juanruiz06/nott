@@ -1,0 +1,65 @@
+# Páginas de local y de ciudad de nott.es (tools/fichas, spec 134 v2 de nott-es/nox).
+#
+# - En cada PR que toca tools/fichas: los tests del generador.
+# - Cada hora (y a mano, o por repository_dispatch «fichas»): genera las páginas desde Supabase y
+#   hace commit solo si algo cambió. Está APAGADA hasta que la variable del repo FICHAS_ACTIVAS
+#   valga «1» (la base de producción aún no tiene get_web_venues).
+#
+# Variables del repo (no son secretas): SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, FICHAS_ACTIVAS y,
+# como freno de emergencia, FICHAS_NOINDEX=1 (todas las páginas con noindex).
+name: fichas
+
+on:
+  pull_request:
+    paths: ['tools/fichas/**', 'assets/fichas.css', '.github/workflows/fichas.yml']
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [fichas]
+
+concurrency:
+  group: fichas-${{ github.event_name == 'pull_request' && github.ref || 'generar' }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test tools/fichas/build.test.mjs
+
+  generar:
+    if: github.event_name != 'pull_request' && vars.FICHAS_ACTIVAS == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test tools/fichas/build.test.mjs
+      - name: Generar
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          NOINDEX: ${{ vars.FICHAS_NOINDEX }}
+        run: node tools/fichas/build.mjs
+      - name: Commit si hay cambios
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git -c user.name="nott-fichas[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "fichas: regenerar páginas"
+          git push
